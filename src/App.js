@@ -1,4 +1,4 @@
-import { Card } from 'antd'
+import { Card } from 'antd';
 import logo from './logo.svg';
 import './App.css';
 import 'antd/dist/antd.css';
@@ -19,7 +19,11 @@ function App() {
         >
           Learn React
         </a>
-        <Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 300 }}>
+        <Card
+          title="Default size card"
+          extra={<a href="#">More</a>}
+          style={{ width: 300 }}
+        >
           <p>Hello ANT DESIGN!</p>
         </Card>
       </header>
