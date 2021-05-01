@@ -1,34 +1,24 @@
-import { Card } from 'antd';
-import logo from './logo.svg';
-import './App.css';
 import 'antd/dist/antd.css';
+import { Login } from 'modules';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <Card
-          title="Default size card"
-          extra={<a href="#">More</a>}
-          style={{ width: 300 }}
-        >
-          <p>Hello ANT DESIGN!</p>
-        </Card>
-      </header>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            Home
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/panel">Panel</Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;

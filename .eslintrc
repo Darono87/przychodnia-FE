@@ -1,0 +1,35 @@
+{
+  "env": {
+    "commonjs": true,
+    "es2020": true,
+    "node": false
+  },
+  "extends": ["react-app", "airbnb-base", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "plugins": ["prettier"],
+  "rules": {
+    "quotes": ["error", "single"],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "class-methods-use-this": "off",
+    "no-param-reassign": "off",
+    "no-console": "warn",
+    "camelcase": "off",
+    "no-unused-vars": "warn",
+    "sort-imports": "off",
+    "import/prefer-default-export": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  }
+}
