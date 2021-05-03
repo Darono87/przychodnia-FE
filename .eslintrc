@@ -4,7 +4,12 @@
     "es2020": true,
     "node": false
   },
-  "extends": ["react-app", "airbnb-base", "prettier"],
+  "extends": [
+    "react-app",
+    "airbnb-base",
+    "prettier",
+    "plugin:react-hooks/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": 11
   },

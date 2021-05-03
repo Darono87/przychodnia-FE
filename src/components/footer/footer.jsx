@@ -1,7 +1,11 @@
 import React from 'react';
+import { Layout } from 'antd';
+import './footer.less';
+
+const { Footer: BaseFooter } = Layout;
 
 const Footer = () => {
-  return <div>footer</div>;
+  return <BaseFooter className="footer-main">© 2021 by super devs</BaseFooter>;
 };
 
 export default Footer;
