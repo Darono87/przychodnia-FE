@@ -9,7 +9,7 @@ const Navbar = () => {
   const { accessToken, signOut } = useContext(AuthContext);
   return (
     <Header className="navbar-main">
-      <div>Przychodnia Pod AEI</div>
+      <div>Przychodnia "Pod AEiI"</div>
       {accessToken && <Button onClick={signOut}> Log Out </Button>}
     </Header>
   );

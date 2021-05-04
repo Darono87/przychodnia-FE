@@ -1,6 +1,6 @@
 import 'antd/dist/antd.less';
 import './theme/overrides.less';
-import { Login, Panel } from 'modules';
+import { Home, Login, Panel } from 'modules';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { AuthContextProvider } from './store';
@@ -13,7 +13,7 @@ const App = () => {
         <BrowserRouter>
           <Switch>
             <Route exact path="/">
-              Home
+              <Home />
             </Route>
             <Route path={PATHS.LOGIN}>
               <Login />
