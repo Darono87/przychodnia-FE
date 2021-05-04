@@ -4,6 +4,7 @@ import { Login, Panel } from 'modules';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { AuthContextProvider } from './store';
+import { PATHS } from './strings';
 
 const App = () => {
   return (
@@ -14,10 +15,10 @@ const App = () => {
             <Route exact path="/">
               Home
             </Route>
-            <Route path="/login">
+            <Route path={PATHS.LOGIN}>
               <Login />
             </Route>
-            <Route path="/panel">
+            <Route path={PATHS.PANEL}>
               <Panel />
             </Route>
           </Switch>

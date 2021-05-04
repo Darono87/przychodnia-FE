@@ -4,13 +4,20 @@ import {
   LaptopOutlined,
   NotificationOutlined,
 } from '@ant-design/icons';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Footer, Navbar } from 'components';
+import { PATHS } from 'strings';
+import { Redirect } from 'react-router';
+import { AuthContext } from '../../store';
 
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
 const Login = () => {
+  const { accessToken } = useContext(AuthContext);
+  if (!accessToken) {
+    return <Redirect to={PATHS.HOMEPAGE} />;
+  }
   return (
     <Layout style={{ height: '100vh' }}>
       <Navbar />

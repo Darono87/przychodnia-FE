@@ -1,11 +1,18 @@
-import React from 'react';
-import { Layout } from 'antd';
+import React, { useContext } from 'react';
+import { Button, Layout } from 'antd';
 import './navbar.less';
+import { AuthContext } from '../../store';
 
 const { Header } = Layout;
 
 const Navbar = () => {
-  return <Header className="navbar-main">Przychodnia Pod AEI</Header>;
+  const { accessToken, signOut } = useContext(AuthContext);
+  return (
+    <Header className="navbar-main">
+      <div>Przychodnia Pod AEI</div>
+      {accessToken && <Button onClick={signOut}> Log Out </Button>}
+    </Header>
+  );
 };
 
 export default Navbar;

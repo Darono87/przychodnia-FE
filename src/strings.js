@@ -14,3 +14,9 @@ export const REQUEST_STATUS = {
   ERROR: 'ERROR',
   SUCCESS: 'SUCCESS',
 };
+
+export const PATHS = {
+  HOMEPAGE: '/',
+  LOGIN: '/login',
+  PANEL: '/panel',
+};
