@@ -9,7 +9,7 @@ import { ENDPOINT, REQUEST_STATUS } from 'strings';
 class AuthService {
   static async signIn(login, password) {
     try {
-      const data = await axios.post(ENDPOINT.authenticate, {
+      const { data } = await axios.post(ENDPOINT.authenticate, {
         login,
         password,
       });
