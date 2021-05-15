@@ -1,14 +1,16 @@
 export const API_BASE_URL = 'https://localhost:5001/api';
 
-const USER_CONTROLLER = 'user';
+const USER_CONTROLLER = 'users';
+const PATIENT_CONTROLLER = 'patients';
 
 const createURL = (controller, endpoint) =>
-  `${API_BASE_URL}/${controller}/${endpoint}`;
+  `${API_BASE_URL}/${controller}${endpoint ? `/${endpoint}` : ''}`;
 
 export const ENDPOINT = {
   authenticate: createURL(USER_CONTROLLER, 'authenticate'),
   refresh: createURL(USER_CONTROLLER, 'refresh'),
-  addEmployee: createURL(USER_CONTROLLER, 'create'),
+  addEmployee: createURL(USER_CONTROLLER),
+  addPatient: createURL(PATIENT_CONTROLLER),
 };
 
 export const REQUEST_STATUS = {
@@ -24,7 +26,7 @@ export const PATHS = {
 
 export const ROLES = {
   Admin: 'Admin',
-  Registrator: 'Registrator',
+  Registrar: 'Registrar',
   Doctor: 'Doctor',
   LabTechnician: 'LabTechnician',
   LabManager: 'LabManager',

@@ -2,13 +2,14 @@ import { Empty } from 'antd';
 import React from 'react';
 import { MODES } from 'strings';
 import AddEmployeeForm from './AddEmployeeForm.jsx';
+import AddPatientForm from './AddPatientForm.jsx';
 
 const Modes = ({ mode }) => {
   switch (mode) {
     case MODES.AddEmployee:
       return <AddEmployeeForm />;
     case MODES.AddPatient:
-      return <div>HO</div>;
+      return <AddPatientForm />;
     default:
       return (
         <Empty

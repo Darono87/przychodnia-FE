@@ -15,17 +15,17 @@ export const modes = [
   },
   {
     name: MODES.AddPatient,
-    roles: [ROLES.Registrator, ROLES.Admin],
+    roles: [ROLES.Registrar],
     icon: <UserAddOutlined />,
   },
   {
     name: MODES.ScheduleAppointment,
-    roles: [ROLES.Registrator],
+    roles: [ROLES.Registrar],
     icon: <ScheduleOutlined />,
   },
   {
     name: MODES.CancelAppointment,
-    roles: [ROLES.Registrator, ROLES.Doctor],
+    roles: [ROLES.Registrar, ROLES.Doctor],
     icon: <CloseOutlined />,
   },
 ];
