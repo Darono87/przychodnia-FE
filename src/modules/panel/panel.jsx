@@ -1,20 +1,18 @@
-import { Layout, Menu } from 'antd';
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from '@ant-design/icons';
-import React, { useContext } from 'react';
+import { Card, Empty, Layout, Menu } from 'antd';
+import React, { useContext, useState } from 'react';
 import { Footer, Navbar } from 'components';
 import { PATHS } from 'strings';
 import { Redirect } from 'react-router';
 import { AuthContext } from '../../store';
+import { modes } from './panel.utils.jsx';
+import './panel.less';
+import Modes from './Modes';
 
 const { Content, Sider } = Layout;
-const { SubMenu } = Menu;
 
-const Login = () => {
-  const { accessToken } = useContext(AuthContext);
+const Panel = () => {
+  const { accessToken, role } = useContext(AuthContext);
+  const [selectedMode, setSelectedMode] = useState(null);
   if (!accessToken) {
     return <Redirect to={PATHS.HOMEPAGE} />;
   }
@@ -22,37 +20,37 @@ const Login = () => {
     <Layout style={{ height: '100vh' }}>
       <Navbar />
       <Layout>
-        <Sider width={200} style={{ overflow: 'auto' }}>
+        <Sider width={250} style={{ overflow: 'auto' }}>
           <Menu
             mode="inline"
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
             style={{ minHeight: '100%' }}>
-            <SubMenu key="sub1" icon={<UserOutlined />} title="subnav 1">
-              <Menu.Item key="1">option1</Menu.Item>
-              <Menu.Item key="2">option2</Menu.Item>
-              <Menu.Item key="3">option3</Menu.Item>
-              <Menu.Item key="4">option4</Menu.Item>
-            </SubMenu>
-            <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
-              <Menu.Item key="5">option5</Menu.Item>
-              <Menu.Item key="6">option6</Menu.Item>
-              <Menu.Item key="7">option7</Menu.Item>
-              <Menu.Item key="8">option8</Menu.Item>
-            </SubMenu>
-            <SubMenu
-              key="sub3"
-              icon={<NotificationOutlined />}
-              title="subnav 3">
-              <Menu.Item key="9">option9</Menu.Item>
-              <Menu.Item key="10">option10</Menu.Item>
-              <Menu.Item key="11">option11</Menu.Item>
-              <Menu.Item key="12">option12</Menu.Item>
-            </SubMenu>
+            {modes
+              .filter(({ roles }) => roles.includes(role))
+              .map(({ name, icon }, index) => (
+                <Menu.Item
+                  onClick={() => setSelectedMode(name)}
+                  key={`menu-item-${index}`}
+                  icon={icon}>
+                  {name}
+                </Menu.Item>
+              ))}
           </Menu>
         </Sider>
         <Layout>
-          <Content>Content</Content>
+          <Content>
+            <Card title={selectedMode || ''} className="panel-main-card">
+              {selectedMode ? (
+                <Modes mode={selectedMode} />
+              ) : (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="Pick the option from the drawer on the left hand side."
+                />
+              )}
+            </Card>
+          </Content>
           <Footer />
         </Layout>
       </Layout>
@@ -60,4 +58,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Panel;

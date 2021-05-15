@@ -18,6 +18,15 @@ class AuthService {
       return { status: REQUEST_STATUS.ERROR, error };
     }
   }
+
+  static async create(formValues) {
+    try {
+      const { data } = await axios.post(ENDPOINT.addEmployee, formValues);
+      return { status: REQUEST_STATUS.SUCCESS, data };
+    } catch (error) {
+      return { status: REQUEST_STATUS.ERROR, error };
+    }
+  }
 }
 
 export default AuthService;

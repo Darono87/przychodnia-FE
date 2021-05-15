@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { notification } from 'antd';
+import axios from 'axios';
+import { displaySnackbar } from 'utils';
 import { AuthService } from '../services';
 
 const getDefaultState = () => ({
@@ -10,12 +11,6 @@ const getDefaultState = () => ({
 
 const AuthContext = React.createContext(getDefaultState());
 
-const openNotificationWithIcon = (type, message) => {
-  notification[type]({
-    message,
-  });
-};
-
 const AuthContextProvider = ({ children }) => {
   const [state, setState] = useState(getDefaultState());
   const signIn = useCallback(async ({ login, password }) => {
@@ -24,20 +19,22 @@ const AuthContextProvider = ({ children }) => {
       localStorage.setItem('accessToken', result.data.accessToken);
       localStorage.setItem('refreshToken', result.data.refreshToken);
       localStorage.setItem('role', result.data.role);
+      axios.defaults.headers.common.Authorization = `Bearer ${result.data.accessToken}`;
       // @ts-ignore
       setState(result.data);
-      openNotificationWithIcon('success', 'Login successful!');
+      displaySnackbar('success', 'Login successful!');
       return true;
     }
-    openNotificationWithIcon('error', 'Login unsuccessful!');
+    displaySnackbar('error', 'Login unsuccessful!');
     return false;
   }, []);
   const signOut = useCallback(() => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('role');
+    axios.defaults.headers.common.Authorization = undefined;
     setState(getDefaultState());
-    openNotificationWithIcon('success', 'Successfully logged out');
+    displaySnackbar('success', 'Successfully logged out');
   }, []);
 
   return (
