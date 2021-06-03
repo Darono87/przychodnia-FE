@@ -7,16 +7,21 @@ import './TextFields.less';
 const PasswordField = ({ name, placeholder, ...props }) => (
   <Field name={name}>
     {({ field, meta }) => (
-      <Input.Password
-        {...props}
-        {...field}
-        size="large"
-        placeholder={placeholder}
-        iconRender={visible =>
-          visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-        }
-        className={meta.touched && meta.error ? 'field_error_soft' : ''}
-      />
+      <div className="textfield_parent">
+        <Input.Password
+          {...props}
+          {...field}
+          size="large"
+          placeholder={placeholder}
+          iconRender={visible =>
+            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+          }
+          className={meta.touched && meta.error ? 'field_error_soft' : ''}
+        />
+        {meta.touched && meta.error && (
+          <div className="error_msg">{meta.error}</div>
+        )}
+      </div>
     )}
   </Field>
 );

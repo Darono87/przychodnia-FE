@@ -52,7 +52,7 @@ const AddPatientForm = () => {
       {({ submitForm }) => (
         <Row gutter={16} style={{ height: '100%' }}>
           <Col
-            className="add-employee-form-col"
+            className="mode-form-col"
             span={12}
             style={{ borderRight: '1px solid #f0f0f0' }}>
             <Title level={4}> Personal Data </Title>
@@ -60,7 +60,7 @@ const AddPatientForm = () => {
             <TextField name="lastName" placeholder="Last Name" />
             <TextField name="peselNumber" placeholder="PESEL Number" />
           </Col>
-          <Col className="add-employee-form-col" span={12}>
+          <Col className="mode-form-col" span={12}>
             <Title level={4}> Address </Title>
             <TextField name="country" placeholder="Country" />
             <TextField name="postalCode" placeholder="Postal Code" />

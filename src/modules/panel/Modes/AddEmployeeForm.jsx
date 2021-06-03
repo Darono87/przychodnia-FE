@@ -6,7 +6,7 @@ import { AuthService } from 'services';
 import { REQUEST_STATUS, ROLES } from 'strings';
 import { displaySnackbar } from 'utils';
 import { object, string } from 'yup';
-import './AddEmployeeForm.less';
+import './Forms.less';
 
 const initialValues = {
   login: '',
@@ -19,7 +19,13 @@ const initialValues = {
 
 const validationSchema = object().shape({
   login: string().required(),
-  password: string().required().min(8),
+  password: string()
+    .required()
+    .min(8)
+    .matches(
+      /(?=.*[A-Z])(?=.*[0-9])/,
+      'Password must contain a number and capital letter.',
+    ),
   firstName: string().required(),
   lastName: string().required(),
   role: string().required(),
@@ -40,7 +46,7 @@ const AddEmployeeForm = () => {
       {({ submitForm, values }) => (
         <Row gutter={16} style={{ height: '100%' }}>
           <Col
-            className="add-employee-form-col"
+            className="mode-form-col"
             span={12}
             style={{ borderRight: '1px solid #f0f0f0' }}>
             <Select
@@ -51,7 +57,7 @@ const AddEmployeeForm = () => {
             <TextField name="login" placeholder="Login" />
             <PasswordField name="password" placeholder="Password" />
           </Col>
-          <Col className="add-employee-form-col" span={12}>
+          <Col className="mode-form-col" span={12}>
             <TextField name="firstName" placeholder="First Name" />
             <TextField name="lastName" placeholder="Last Name" />
             {values.role === ROLES.Doctor && (

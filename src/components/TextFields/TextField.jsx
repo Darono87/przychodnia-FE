@@ -6,7 +6,7 @@ import './TextFields.less';
 const TextField = ({ name, placeholder, ...props }) => (
   <Field name={name}>
     {({ field, meta }) => (
-      <div style={{ position: 'relative' }}>
+      <div className="textfield_parent">
         <Input
           {...field}
           {...props}

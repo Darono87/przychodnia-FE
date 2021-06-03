@@ -11,6 +11,8 @@ export const ENDPOINT = {
   refresh: createURL(USER_CONTROLLER, 'refresh'),
   addEmployee: createURL(USER_CONTROLLER),
   addPatient: createURL(PATIENT_CONTROLLER),
+  getUsersByRoleSuggestions: createURL(USER_CONTROLLER, 'suggestions'),
+  getPatientsSuggestions: createURL(PATIENT_CONTROLLER, 'suggestions'),
 };
 
 export const REQUEST_STATUS = {
