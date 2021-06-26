@@ -3,6 +3,7 @@ import React from 'react';
 import { MODES } from 'strings';
 import AddEmployeeForm from './AddEmployeeForm.jsx';
 import AddPatientForm from './AddPatientForm.jsx';
+import AppointmentsList from './AppointmentsList.jsx';
 import ScheduleAppointmentForm from './ScheduleAppointmentForm.jsx';
 
 const Modes = ({ mode }) => {
@@ -13,6 +14,8 @@ const Modes = ({ mode }) => {
       return <AddPatientForm />;
     case MODES.ScheduleAppointment:
       return <ScheduleAppointmentForm />;
+    case MODES.ListAppointments:
+      return <AppointmentsList />;
     default:
       return (
         <Empty

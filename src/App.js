@@ -9,9 +9,9 @@ import { PATHS } from './strings';
 const App = () => {
   return (
     <div className="App">
-      <AuthContextProvider>
-        <SuggestionsContextProvider>
-          <BrowserRouter>
+      <BrowserRouter>
+        <AuthContextProvider>
+          <SuggestionsContextProvider>
             <Switch>
               <Route exact path="/">
                 <Home />
@@ -23,9 +23,9 @@ const App = () => {
                 <Panel />
               </Route>
             </Switch>
-          </BrowserRouter>
-        </SuggestionsContextProvider>
-      </AuthContextProvider>
+          </SuggestionsContextProvider>
+        </AuthContextProvider>
+      </BrowserRouter>
     </div>
   );
 };

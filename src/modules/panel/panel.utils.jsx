@@ -2,7 +2,7 @@ import {
   UsergroupAddOutlined,
   UserAddOutlined,
   ScheduleOutlined,
-  CloseOutlined,
+  CalendarOutlined,
 } from '@ant-design/icons';
 import React from 'react';
 import { ROLES, MODES } from 'strings';
@@ -24,8 +24,8 @@ export const modes = [
     icon: <ScheduleOutlined />,
   },
   {
-    name: MODES.CancelAppointment,
+    name: MODES.ListAppointments,
     roles: [ROLES.Registrar, ROLES.Doctor],
-    icon: <CloseOutlined />,
+    icon: <CalendarOutlined />,
   },
 ];

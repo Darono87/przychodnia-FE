@@ -1,11 +1,19 @@
-import { AutoComplete } from 'antd';
+import { AutoComplete, Spin } from 'antd';
 import { Field } from 'formik';
 import React, { useState } from 'react';
 import './TextFields.less';
 
-const Autocomplete = ({ name, placeholder, options, ...props }) => {
+const Autocomplete = ({ name, placeholder, options, isLoading, ...props }) => {
   const [label, setLabel] = useState(undefined);
   const [rebounceFlag, setRebounceFlag] = useState(false);
+
+  if (isLoading === true)
+    return (
+      <div style={{ textAlign: 'center' }}>
+        {placeholder}: <Spin />
+      </div>
+    );
+
   return (
     <Field name={name}>
       {({ field, meta, form }) => (

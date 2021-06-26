@@ -1,5 +1,5 @@
 import { Space, Button } from 'antd';
-import { Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { object, string } from 'yup';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -27,16 +27,18 @@ const LoginForm = () => {
         }
       }}>
       {({ submitForm }) => (
-        <Space
-          size="large"
-          direction="vertical"
-          style={{ width: '60%', marginLeft: '20%' }}>
-          <TextField name="login" placeholder="Login" />
-          <PasswordField name="password" placeholder="Password" />
-          <Button onClick={submitForm} size="large" type="primary">
-            Sign in
-          </Button>
-        </Space>
+        <Form>
+          <Space
+            size="large"
+            direction="vertical"
+            style={{ width: '60%', marginLeft: '20%' }}>
+            <TextField name="login" placeholder="Login" />
+            <PasswordField name="password" placeholder="Password" />
+            <Button onClick={submitForm} size="large" type="primary">
+              Sign in
+            </Button>
+          </Space>
+        </Form>
       )}
     </Formik>
   );
