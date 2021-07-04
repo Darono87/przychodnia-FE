@@ -3,6 +3,8 @@ export const API_BASE_URL = 'https://localhost:5001/api';
 const USER_CONTROLLER = 'users';
 const PATIENT_CONTROLLER = 'patients';
 const APPOINTMENT_CONTROLLER = 'appointments';
+const EXAMINATION_CODE_CONTROLLER = 'examinationCodes';
+const PHYSICAL_EXAMINATION_CONTROLLER = 'physicalExaminations';
 
 const createURL = (controller, endpoint) =>
   `${API_BASE_URL}/${controller}${endpoint ? `/${endpoint}` : ''}`;
@@ -17,6 +19,12 @@ export const ENDPOINT = {
   scheduleAppointment: createURL(APPOINTMENT_CONTROLLER),
   getAppointments: createURL(APPOINTMENT_CONTROLLER),
   cancelAppointment: createURL(APPOINTMENT_CONTROLLER, 'cancel'),
+  getAppointmentsSuggestions: createURL(APPOINTMENT_CONTROLLER, 'suggestions'),
+  getExaminationCodesSuggestions: createURL(
+    EXAMINATION_CODE_CONTROLLER,
+    'suggestions',
+  ),
+  addPhysicalExamination: createURL(PHYSICAL_EXAMINATION_CONTROLLER),
 };
 
 export const REQUEST_STATUS = {
@@ -45,6 +53,7 @@ export const MODES = {
   AddPatient: 'Add Patient',
   ScheduleAppointment: 'Schedule Appointment',
   ListAppointments: 'Appointments',
+  AddPhysicalExamination: 'Add Physical Examination',
 };
 
 export const APPOINTMENT_STATUS = [

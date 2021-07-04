@@ -17,11 +17,6 @@ const AppointmentContext = React.createContext(getDefaultState());
 const AppointmentContextProvider = ({ children }) => {
   const [state, setState] = useState(getDefaultState());
 
-  useEffect(() => {
-    axios.defaults.headers.common.Authorization =
-      state.accessToken && `Bearer ${state.accessToken}`;
-  }, [state.accessToken]);
-
   const scheduleAppointment = useCallback(async formValues => {
     const result = await AppointmentsService.create(formValues);
     if (result.data) {

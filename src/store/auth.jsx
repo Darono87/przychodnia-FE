@@ -18,9 +18,13 @@ const AuthContextProvider = ({ children }) => {
   const history = useHistory();
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    axios.defaults.headers.common.Authorization = token && `Bearer ${token}`;
-  }, []);
+    axios.interceptors.request.use(function (config) {
+      const token = state.accessToken;
+      config.headers.Authorization = `Bearer ${token}`;
+
+      return config;
+    });
+  }, [state.accessToken]);
 
   const signIn = useCallback(async ({ login, password }) => {
     const result = await AuthService.signIn(login, password);
@@ -30,7 +34,6 @@ const AuthContextProvider = ({ children }) => {
       localStorage.setItem('role', result.data.role);
       // @ts-ignore
       setState(result.data);
-      axios.defaults.headers.common.Authorization = `Bearer ${result.data.accessToken}`;
       displaySnackbar('success', 'Login successful!');
       return true;
     }

@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
-import { displaySnackbar } from 'utils';
+import React, { useState } from 'react';
+import { displaySnackbar, formatDatetime } from 'utils';
 import { REQUEST_STATUS, ROLES } from 'strings';
 import { SuggestionsService } from '../services';
 
@@ -14,6 +13,10 @@ const getDefaultState = () => ({
   ),
   patients: [],
   patientsStatus: REQUEST_STATUS.IDLE,
+  appointments: [],
+  appointmentsStatus: REQUEST_STATUS.IDLE,
+  examinationCodes: [],
+  examinationCodesStatus: REQUEST_STATUS.IDLE,
 });
 
 const SuggestionsContext = React.createContext(getDefaultState());
@@ -64,9 +67,55 @@ const SuggestionsContextProvider = ({ children }) => {
     else displaySnackbar('error', "Couldn't get the patients list"); //eslint-disable-line
   };
 
+  const updateAppointmentsSuggestions = async () => {
+    setState(pastState => ({
+      ...pastState,
+      appointmentsStatus: REQUEST_STATUS.LOADING,
+      appointments: [],
+    }));
+    const { data } = await SuggestionsService.getAppointments();
+    if (data?.suggestions)
+      setState(pastState => ({
+        ...pastState,
+        appointments: data.suggestions.map(suggestion => {
+          const splitted = suggestion.label.split(',');
+          return {
+            ...suggestion,
+            label: `${formatDatetime(splitted[0])}, ${splitted[1]}`,
+          };
+        }),
+        appointmentsStatus: REQUEST_STATUS.SUCCESS,
+      }));
+    else displaySnackbar('error', "Couldn't get the appointments list"); //eslint-disable-line
+  };
+
+  const updateExaminationCodesSuggestions = async () => {
+    setState(pastState => ({
+      ...pastState,
+      examinationCodesStatus: REQUEST_STATUS.LOADING,
+      examinationCodes: [],
+    }));
+    const {
+      data: examinationCodes,
+    } = await SuggestionsService.getExaminationCodes();
+    if (examinationCodes?.suggestions)
+      setState(pastState => ({
+        ...pastState,
+        examinationCodes: examinationCodes.suggestions,
+        examinationCodesStatus: REQUEST_STATUS.SUCCESS,
+      }));
+    else displaySnackbar('error', "Couldn't get examination codes"); //eslint-disable-line
+  };
+
   return (
     <SuggestionsContext.Provider
-      value={{ ...state, updateRoleSuggestions, updatePatientsSuggestions }}>
+      value={{
+        ...state,
+        updateRoleSuggestions,
+        updatePatientsSuggestions,
+        updateAppointmentsSuggestions,
+        updateExaminationCodesSuggestions,
+      }}>
       {children}
     </SuggestionsContext.Provider>
   );

@@ -1,14 +1,16 @@
-import { CloseOutlined } from '@ant-design/icons';
-import { Button, Spin, Table, Tag } from 'antd';
+import { BookOutlined, CloseOutlined } from '@ant-design/icons';
+import { Button, Space, Spin, Table, Tag, Tooltip } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import { AppointmentContext } from 'store';
+import { useHistory } from 'react-router';
+import { AuthContext, AppointmentContext } from 'store';
+import { MODES, ROLES } from 'strings';
 import { calculateIsLoading, displaySnackbar } from 'utils';
 
 // Date, Doctor Name, Patient Name, Shortcut of Description
 
-const AppointmentsList = () => {
+const AppointmentsList = ({ setMode, setModeId }) => {
   const [page, setPage] = useState(1);
-  const perPage = 3;
+  const perPage = 6;
   const {
     getAppointments,
     appointments,
@@ -16,6 +18,7 @@ const AppointmentsList = () => {
     appointmentsCount,
     cancelAppointment,
   } = useContext(AppointmentContext);
+  const { role } = useContext(AuthContext);
 
   useEffect(() => {
     getAppointments({ page, perPage });
@@ -72,22 +75,39 @@ const AppointmentsList = () => {
       key: 'description',
     },
     {
-      title: 'Cancel',
-      key: 'cancel',
+      title: 'Actions',
+      key: 'actions',
       fixed: 'right',
       render: (_, record) => (
-        <Button
-          shape="circle"
-          icon={<CloseOutlined />}
-          onClick={async () => {
-            try {
-              await cancelAppointment(record.id);
-              await getAppointments(page, perPage);
-            } catch (e) {
-              displaySnackbar('error', 'Sorry, unexpected error appeared');
-            }
-          }}
-        />
+        <Space>
+          <Button
+            shape="circle"
+            icon={<CloseOutlined />}
+            onClick={async () => {
+              try {
+                await cancelAppointment(record.id);
+                await getAppointments(page, perPage);
+              } catch (e) {
+                displaySnackbar(
+                  'error',
+                  'Sorry, Could not fetch the appointments.',
+                );
+              }
+            }}
+          />
+          {role === ROLES.Doctor && (
+            <Tooltip title="Add Physical Examination">
+              <Button
+                shape="round"
+                icon={<BookOutlined />}
+                onClick={() => {
+                  setMode(MODES.AddPhysicalExamination);
+                  setModeId(record.id);
+                }}
+              />
+            </Tooltip>
+          )}
+        </Space>
       ),
     },
   ];

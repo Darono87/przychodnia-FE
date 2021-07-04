@@ -1,11 +1,23 @@
 import { AutoComplete, Spin } from 'antd';
-import { Field } from 'formik';
-import React, { useState } from 'react';
+import { Field, useFormikContext } from 'formik';
+import React, { useEffect, useState } from 'react';
 import './TextFields.less';
 
 const Autocomplete = ({ name, placeholder, options, isLoading, ...props }) => {
+  const { values } = useFormikContext();
   const [label, setLabel] = useState(undefined);
   const [rebounceFlag, setRebounceFlag] = useState(false);
+  const [initFlag, setInitFlag] = useState(false);
+
+  useEffect(() => {
+    if (!initFlag && values.appointmentId && options) {
+      setInitFlag(true);
+      console.log(options);
+      setLabel(
+        options.find(option => option.value === values.appointmentId)?.label,
+      );
+    }
+  }, [values.appointmentId]);
 
   if (isLoading === true)
     return (
@@ -21,14 +33,14 @@ const Autocomplete = ({ name, placeholder, options, isLoading, ...props }) => {
           <AutoComplete
             {...field}
             {...props}
-            onChange={value => {
-              setLabel(value);
-              if (!rebounceFlag) form.setFieldValue(name, null);
+            onChange={to => {
+              setLabel(to);
+              if (!rebounceFlag) form.setFieldValue(name, undefined);
               else setRebounceFlag(false);
             }}
             value={label}
-            onSelect={(value, option) => {
-              form.setFieldValue(name, value);
+            onSelect={(to, option) => {
+              form.setFieldValue(name, to);
               setLabel(option.label);
               setRebounceFlag(true);
             }}

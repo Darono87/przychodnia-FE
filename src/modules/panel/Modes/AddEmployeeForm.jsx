@@ -29,7 +29,11 @@ const validationSchema = object().shape({
   firstName: string().required(),
   lastName: string().required(),
   role: string().required(),
-  permitNumber: string().optional(),
+  permitNumber: string().when('role', {
+    is: ROLES.Doctor,
+    then: string().required(),
+    otherwise: string().optional(),
+  }),
 });
 
 const AddEmployeeForm = () => {

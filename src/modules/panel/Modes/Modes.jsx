@@ -5,8 +5,9 @@ import AddEmployeeForm from './AddEmployeeForm.jsx';
 import AddPatientForm from './AddPatientForm.jsx';
 import AppointmentsList from './AppointmentsList.jsx';
 import ScheduleAppointmentForm from './ScheduleAppointmentForm.jsx';
+import AddPhysicalExaminationForm from './AddPhysicalExaminationForm.jsx';
 
-const Modes = ({ mode }) => {
+const Modes = ({ mode, setMode, modeId, setModeId }) => {
   switch (mode) {
     case MODES.AddEmployee:
       return <AddEmployeeForm />;
@@ -15,7 +16,11 @@ const Modes = ({ mode }) => {
     case MODES.ScheduleAppointment:
       return <ScheduleAppointmentForm />;
     case MODES.ListAppointments:
-      return <AppointmentsList />;
+      return <AppointmentsList setModeId={setModeId} setMode={setMode} />;
+    case MODES.AddPhysicalExamination:
+      return (
+        <AddPhysicalExaminationForm modeId={modeId} setModeId={setModeId} />
+      );
     default:
       return (
         <Empty
