@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { displaySnackbar, formatDatetime } from 'utils';
-import { REQUEST_STATUS, ROLES } from 'strings';
+import { EXAMINATION_TYPES, REQUEST_STATUS, ROLES } from 'strings';
 import { SuggestionsService } from '../services';
 
 const getDefaultState = () => ({
@@ -97,7 +97,9 @@ const SuggestionsContextProvider = ({ children }) => {
     }));
     const {
       data: examinationCodes,
-    } = await SuggestionsService.getExaminationCodes();
+    } = await SuggestionsService.getExaminationCodes(
+      EXAMINATION_TYPES.Physical,
+    );
     if (examinationCodes?.suggestions)
       setState(pastState => ({
         ...pastState,

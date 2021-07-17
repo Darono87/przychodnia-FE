@@ -18,12 +18,8 @@ const AuthContextProvider = ({ children }) => {
   const history = useHistory();
 
   useEffect(() => {
-    axios.interceptors.request.use(function (config) {
-      const token = state.accessToken;
-      config.headers.Authorization = `Bearer ${token}`;
-
-      return config;
-    });
+    const token = state.accessToken;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   }, [state.accessToken]);
 
   const signIn = useCallback(async ({ login, password }) => {

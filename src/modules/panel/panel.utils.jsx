@@ -4,6 +4,7 @@ import {
   ScheduleOutlined,
   CalendarOutlined,
   BookOutlined,
+  HeartOutlined,
 } from '@ant-design/icons';
 import React from 'react';
 import { ROLES, MODES } from 'strings';
@@ -33,5 +34,10 @@ export const modes = [
     name: MODES.AddPhysicalExamination,
     roles: [ROLES.Doctor],
     icon: <BookOutlined />,
+  },
+  {
+    name: MODES.ListPatients,
+    roles: [ROLES.Doctor, ROLES.Admin, ROLES.Registrar],
+    icon: <HeartOutlined />,
   },
 ];

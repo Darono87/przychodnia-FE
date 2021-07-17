@@ -31,9 +31,12 @@ class SuggestionsService {
     }
   }
 
-  static async getExaminationCodes() {
+  static async getExaminationCodes(examinationType) {
     try {
-      const { data } = await axios.get(ENDPOINT.getExaminationCodesSuggestions);
+      const { data } = await axios.get(
+        ENDPOINT.getExaminationCodesSuggestions,
+        { params: { examinationType } },
+      );
       return { status: REQUEST_STATUS.SUCCESS, data };
     } catch (error) {
       return { status: REQUEST_STATUS.ERROR, error };

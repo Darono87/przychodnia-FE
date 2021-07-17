@@ -14,6 +14,8 @@ export const ENDPOINT = {
   refresh: createURL(USER_CONTROLLER, 'refresh'),
   addEmployee: createURL(USER_CONTROLLER),
   addPatient: createURL(PATIENT_CONTROLLER),
+  updatePatient: id => `${createURL(PATIENT_CONTROLLER)}/${id}`,
+  getPatient: id => `${createURL(PATIENT_CONTROLLER)}/${id}`,
   getUsersByRoleSuggestions: createURL(USER_CONTROLLER, 'suggestions'),
   getPatientsSuggestions: createURL(PATIENT_CONTROLLER, 'suggestions'),
   scheduleAppointment: createURL(APPOINTMENT_CONTROLLER),
@@ -25,6 +27,7 @@ export const ENDPOINT = {
     'suggestions',
   ),
   addPhysicalExamination: createURL(PHYSICAL_EXAMINATION_CONTROLLER),
+  getPatients: createURL(PATIENT_CONTROLLER),
 };
 
 export const REQUEST_STATUS = {
@@ -54,6 +57,7 @@ export const MODES = {
   ScheduleAppointment: 'Schedule Appointment',
   ListAppointments: 'Appointments',
   AddPhysicalExamination: 'Add Physical Examination',
+  ListPatients: 'Patients',
 };
 
 export const APPOINTMENT_STATUS = [
@@ -61,3 +65,8 @@ export const APPOINTMENT_STATUS = [
   { name: 'Finished', color: '#67c44d' },
   { name: 'Cancelled', color: '#e0e055' },
 ];
+
+export const EXAMINATION_TYPES = {
+  Physical: 'Physical',
+  Laboratory: 'Laboratory',
+};

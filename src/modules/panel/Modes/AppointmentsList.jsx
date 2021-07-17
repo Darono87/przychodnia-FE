@@ -1,16 +1,18 @@
 import { BookOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Space, Spin, Table, Tag, Tooltip } from 'antd';
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import React, { useContext, useEffect } from 'react';
 import { AuthContext, AppointmentContext } from 'store';
 import { MODES, ROLES } from 'strings';
-import { calculateIsLoading, displaySnackbar } from 'utils';
+import {
+  calculateIsLoading,
+  displaySnackbar,
+  usePagination,
+  useSorting,
+} from 'utils';
 
 // Date, Doctor Name, Patient Name, Shortcut of Description
 
 const AppointmentsList = ({ setMode, setModeId }) => {
-  const [page, setPage] = useState(1);
-  const perPage = 6;
   const {
     getAppointments,
     appointments,
@@ -18,19 +20,23 @@ const AppointmentsList = ({ setMode, setModeId }) => {
     appointmentsCount,
     cancelAppointment,
   } = useContext(AppointmentContext);
+
   const { role } = useContext(AuthContext);
-
+  const { sortKey, isAscending, sortFunction } = useSorting('doctor', true);
+  const { pagination, refresh, perPage, page } = usePagination(
+    props => getAppointments({ ...props, sortKey, isAscending }),
+    appointmentsCount,
+  );
   useEffect(() => {
-    getAppointments({ page, perPage });
-  }, [page, perPage]);
-
-  if (calculateIsLoading(appointmentsStatus)) return <Spin size="large" />;
+    getAppointments({ sortKey, isAscending, perPage, page });
+  }, [sortKey, isAscending, page, perPage]);
 
   const columns = [
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      sorter: true,
       render: ({ name, color }) => (
         <Tag color={color} key={name}>
           {name}
@@ -41,38 +47,45 @@ const AppointmentsList = ({ setMode, setModeId }) => {
       title: 'Doctor',
       dataIndex: 'doctor',
       key: 'doctor',
+      sorter: true,
       render: ({ user }) => `${user.firstName} ${user.lastName}`,
     },
     {
       title: 'Patient',
       dataIndex: 'patient',
       key: 'patient',
+      sorter: true,
       render: ({ firstName, lastName }) => `${firstName} ${lastName}`,
     },
     {
       title: 'Registration Date',
       dataIndex: 'registrationDate',
       key: 'registrationDate',
+      sorter: true,
     },
     {
       title: 'Scheduled Date',
       dataIndex: 'scheduledDate',
       key: 'scheduledDate',
+      sorter: true,
     },
     {
       title: 'Finish Date',
       dataIndex: 'finishDate',
       key: 'finishDate',
+      sorter: true,
     },
     {
       title: 'Diagnosis',
       dataIndex: 'diagnosis',
       key: 'diagnosis',
+      sorter: true,
     },
     {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
+      sorter: true,
     },
     {
       title: 'Actions',
@@ -86,7 +99,7 @@ const AppointmentsList = ({ setMode, setModeId }) => {
             onClick={async () => {
               try {
                 await cancelAppointment(record.id);
-                await getAppointments(page, perPage);
+                await refresh();
               } catch (e) {
                 displaySnackbar(
                   'error',
@@ -113,22 +126,21 @@ const AppointmentsList = ({ setMode, setModeId }) => {
   ];
 
   return (
-    <Table
-      columns={columns}
-      rowKey={'id'}
-      dataSource={appointments}
-      pagination={{
-        onChange: newPage => {
-          setPage(newPage);
-        },
-        pageSize: perPage,
-        current: page,
-        total: appointmentsCount,
-        showTotal: total => (
-          <div style={{ marginRight: 10 }}>{`Num. items: ${total}`}</div>
-        ),
-      }}
-    />
+    <>
+      {calculateIsLoading(appointmentsStatus) && (
+        <Spin
+          style={{ margin: 'auto', marginBottom: 16, marginTop: 16 }}
+          size="large"
+        />
+      )}
+      <Table
+        columns={columns}
+        rowKey={'id'}
+        onChange={sortFunction}
+        dataSource={appointments}
+        pagination={pagination}
+      />
+    </>
   );
 };
 

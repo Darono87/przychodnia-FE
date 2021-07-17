@@ -14,10 +14,10 @@ class AppointmentService {
     }
   }
 
-  static async get({ page, perPage }) {
+  static async get(params) {
     try {
       const { data } = await axios.get(ENDPOINT.getAppointments, {
-        params: { page, perPage },
+        params,
       });
       return { status: REQUEST_STATUS.SUCCESS, data };
     } catch (error) {
