@@ -8,7 +8,7 @@ import {
   PatientContextProvider,
 } from 'store';
 import { Redirect } from 'react-router';
-import { AuthContext } from '../../store';
+import { AuthContext, LabExaminationContextProvider } from '../../store';
 import { modes } from './panel.utils.jsx';
 import './panel.less';
 import Modes from './Modes';
@@ -25,50 +25,54 @@ const Panel = () => {
   return (
     <AppointmentContextProvider>
       <PhysicalExaminationContextProvider>
-        <PatientContextProvider>
-          <Layout style={{ height: '100vh' }}>
-            <Navbar />
-            <Layout>
-              <Sider width={250} style={{ overflow: 'auto' }}>
-                <Menu
-                  mode="inline"
-                  selectedKeys={[selectedMode]}
-                  style={{ minHeight: '100%' }}>
-                  {modes
-                    .filter(({ roles }) => roles.includes(role))
-                    .map(({ name, icon }, index) => (
-                      <Menu.Item
-                        onClick={() => setSelectedMode(name)}
-                        key={name}
-                        icon={icon}>
-                        {name}
-                      </Menu.Item>
-                    ))}
-                </Menu>
-              </Sider>
+        <LabExaminationContextProvider>
+          <PatientContextProvider>
+            <Layout style={{ height: '100vh' }}>
+              <Navbar />
               <Layout>
-                <Content>
-                  <Card title={selectedMode || ''} className="panel-main-card">
-                    {selectedMode ? (
-                      <Modes
-                        mode={selectedMode}
-                        setMode={setSelectedMode}
-                        modeId={modeId}
-                        setModeId={setModeId}
-                      />
-                    ) : (
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        description="Pick the option from the drawer on the left hand side."
-                      />
-                    )}
-                  </Card>
-                </Content>
-                <Footer />
+                <Sider width={250} style={{ overflow: 'auto' }}>
+                  <Menu
+                    mode="inline"
+                    selectedKeys={[selectedMode]}
+                    style={{ minHeight: '100%' }}>
+                    {modes
+                      .filter(({ roles }) => roles.includes(role))
+                      .map(({ name, icon }, index) => (
+                        <Menu.Item
+                          onClick={() => setSelectedMode(name)}
+                          key={name}
+                          icon={icon}>
+                          {name}
+                        </Menu.Item>
+                      ))}
+                  </Menu>
+                </Sider>
+                <Layout>
+                  <Content>
+                    <Card
+                      title={selectedMode || ''}
+                      className="panel-main-card">
+                      {selectedMode ? (
+                        <Modes
+                          mode={selectedMode}
+                          setMode={setSelectedMode}
+                          modeId={modeId}
+                          setModeId={setModeId}
+                        />
+                      ) : (
+                        <Empty
+                          image={Empty.PRESENTED_IMAGE_SIMPLE}
+                          description="Pick the option from the drawer on the left hand side."
+                        />
+                      )}
+                    </Card>
+                  </Content>
+                  <Footer />
+                </Layout>
               </Layout>
             </Layout>
-          </Layout>
-        </PatientContextProvider>
+          </PatientContextProvider>
+        </LabExaminationContextProvider>
       </PhysicalExaminationContextProvider>
     </AppointmentContextProvider>
   );

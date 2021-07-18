@@ -5,6 +5,7 @@ const PATIENT_CONTROLLER = 'patients';
 const APPOINTMENT_CONTROLLER = 'appointments';
 const EXAMINATION_CODE_CONTROLLER = 'examinationCodes';
 const PHYSICAL_EXAMINATION_CONTROLLER = 'physicalExaminations';
+const LAB_EXAMINATION_CONTROLLER = 'labExaminations';
 
 const createURL = (controller, endpoint) =>
   `${API_BASE_URL}/${controller}${endpoint ? `/${endpoint}` : ''}`;
@@ -28,6 +29,7 @@ export const ENDPOINT = {
   ),
   addPhysicalExamination: createURL(PHYSICAL_EXAMINATION_CONTROLLER),
   getPatients: createURL(PATIENT_CONTROLLER),
+  addLabExamination: createURL(LAB_EXAMINATION_CONTROLLER),
 };
 
 export const REQUEST_STATUS = {
@@ -54,6 +56,7 @@ export const ROLES = {
 export const MODES = {
   AddEmployee: 'Add Employee',
   AddPatient: 'Add Patient',
+  AddLabExamination: 'Add Lab Examination',
   ScheduleAppointment: 'Schedule Appointment',
   ListAppointments: 'Appointments',
   AddPhysicalExamination: 'Add Physical Examination',

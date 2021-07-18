@@ -6,6 +6,7 @@ import AddPatientForm from './AddPatientForm.jsx';
 import AppointmentsList from './AppointmentsList.jsx';
 import ScheduleAppointmentForm from './ScheduleAppointmentForm.jsx';
 import AddPhysicalExaminationForm from './AddPhysicalExaminationForm.jsx';
+import AddLabExaminationForm from './AddLabExaminationForm.jsx';
 import PatientsList from './PatientsList.jsx';
 
 const Modes = ({ mode, setMode, modeId, setModeId }) => {
@@ -24,6 +25,8 @@ const Modes = ({ mode, setMode, modeId, setModeId }) => {
       );
     case MODES.ListPatients:
       return <PatientsList setModeId={setModeId} setMode={setMode} />;
+    case MODES.AddLabExamination:
+      return <AddLabExaminationForm modeId={modeId} setModeId={setModeId} />;
     default:
       return (
         <Empty
