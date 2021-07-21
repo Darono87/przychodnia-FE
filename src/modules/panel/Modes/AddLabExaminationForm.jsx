@@ -31,16 +31,13 @@ const AddLabExaminationForm = ({ modeId, setModeId }) => {
   } = useContext(SuggestionsContext);
   const { createLabExamination } = useContext(LabExaminationContext);
 
-  const [reset, setReset] = useState(false);
-
   useEffect(() => {
     updateAppointmentsSuggestions();
     updateExaminationCodesSuggestions();
-    if (reset) setTimeout(() => setReset(false), 500);
     return () => {
       setModeId(-1);
     };
-  }, [reset]);
+  }, []);
 
   return (
     <Formik
@@ -51,7 +48,6 @@ const AddLabExaminationForm = ({ modeId, setModeId }) => {
           actions.resetForm({
             values: getInitialValues(modeId === -1 ? undefined : modeId),
           });
-        setReset(true);
       }}>
       {({ submitForm }) => (
         <Row gutter={16} style={{ height: '100%' }}>
@@ -64,14 +60,12 @@ const AddLabExaminationForm = ({ modeId, setModeId }) => {
               name="appointmentId"
               options={appointments}
               isLoading={calculateIsLoading(appointmentsStatus)}
-              reset={reset}
             />
             <Autocomplete
               placeholder="Examination Code"
               name="examinationCodeId"
               options={examinationCodes}
               isLoading={calculateIsLoading(examinationCodesStatus)}
-              reset={reset}
             />
           </Col>
           <Col className="mode-form-col" span={12}>
