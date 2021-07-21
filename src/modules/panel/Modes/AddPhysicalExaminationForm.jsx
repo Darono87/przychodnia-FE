@@ -43,7 +43,12 @@ const AddPhysicalExaminationForm = ({ modeId, setModeId }) => {
     <Formik
       initialValues={getInitialValues(modeId === -1 ? undefined : modeId)}
       validationSchema={validationSchema}
-      onSubmit={createPhysicalExamination}>
+      onSubmit={(values, actions) => {
+        if (createPhysicalExamination(values))
+          actions.resetForm({
+            values: getInitialValues(modeId === -1 ? undefined : modeId),
+          });
+      }}>
       {({ submitForm }) => (
         <Row gutter={16} style={{ height: '100%' }}>
           <Col

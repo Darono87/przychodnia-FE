@@ -1,7 +1,8 @@
 import { Col, Row, Button } from 'antd';
+import initialise from 'bfj/src/walk';
 import { Autocomplete, TextArea } from 'components';
 import { Formik } from 'formik';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { LabExaminationContext, SuggestionsContext } from 'store';
 import { calculateIsLoading } from 'utils';
 import { object, number, string } from 'yup';
@@ -30,20 +31,28 @@ const AddLabExaminationForm = ({ modeId, setModeId }) => {
   } = useContext(SuggestionsContext);
   const { createLabExamination } = useContext(LabExaminationContext);
 
+  const [reset, setReset] = useState(false);
+
   useEffect(() => {
     updateAppointmentsSuggestions();
     updateExaminationCodesSuggestions();
-
+    if (reset) setTimeout(() => setReset(false), 500);
     return () => {
       setModeId(-1);
     };
-  }, []);
+  }, [reset]);
 
   return (
     <Formik
       initialValues={getInitialValues(modeId === -1 ? undefined : modeId)}
       validationSchema={validationSchema}
-      onSubmit={createLabExamination}>
+      onSubmit={(values, actions) => {
+        if (createLabExamination(values))
+          actions.resetForm({
+            values: getInitialValues(modeId === -1 ? undefined : modeId),
+          });
+        setReset(true);
+      }}>
       {({ submitForm }) => (
         <Row gutter={16} style={{ height: '100%' }}>
           <Col
@@ -55,12 +64,14 @@ const AddLabExaminationForm = ({ modeId, setModeId }) => {
               name="appointmentId"
               options={appointments}
               isLoading={calculateIsLoading(appointmentsStatus)}
+              reset={reset}
             />
             <Autocomplete
               placeholder="Examination Code"
               name="examinationCodeId"
               options={examinationCodes}
               isLoading={calculateIsLoading(examinationCodesStatus)}
+              reset={reset}
             />
           </Col>
           <Col className="mode-form-col" span={12}>

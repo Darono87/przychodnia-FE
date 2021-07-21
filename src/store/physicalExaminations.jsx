@@ -12,15 +12,14 @@ const PhysicalExaminationContextProvider = ({ children }) => {
   const createPhysicalExamination = useCallback(async formValues => {
     const result = await PhysicalExaminationsService.create(formValues);
     if (result.data) {
-      return displaySnackbar(
-        'success',
-        'Physical Examination has been created!',
-      );
+      displaySnackbar('success', 'Physical Examination has been created!');
+      return true;
     }
-    return displaySnackbar(
+    displaySnackbar(
       'error',
       'Something went wrong with creating the physical examination.',
     );
+    return false;
   }, []);
 
   return (

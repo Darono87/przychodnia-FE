@@ -44,7 +44,10 @@ const ScheduleAppointmentForm = () => {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={scheduleAppointment}>
+      onSubmit={(values, actions) => {
+        if (scheduleAppointment(values))
+          actions.resetForm({ values: initialValues });
+      }}>
       {({ submitForm, values }) => (
         <Row gutter={16} style={{ height: '100%' }}>
           <Col

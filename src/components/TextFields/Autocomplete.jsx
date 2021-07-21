@@ -3,7 +3,14 @@ import { Field, useFormikContext } from 'formik';
 import React, { useEffect, useState } from 'react';
 import './TextFields.less';
 
-const Autocomplete = ({ name, placeholder, options, isLoading, ...props }) => {
+const Autocomplete = ({
+  name,
+  placeholder,
+  options,
+  isLoading,
+  reset,
+  ...props
+}) => {
   const { values } = useFormikContext();
   const [label, setLabel] = useState(undefined);
   const [rebounceFlag, setRebounceFlag] = useState(false);
@@ -25,6 +32,7 @@ const Autocomplete = ({ name, placeholder, options, isLoading, ...props }) => {
         {placeholder}: <Spin />
       </div>
     );
+  if (reset === true) setLabel(undefined);
 
   return (
     <Field name={name}>

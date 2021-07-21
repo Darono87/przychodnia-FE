@@ -70,13 +70,16 @@ const AddPatientForm = ({ modeId, setModeId }) => {
           modeId === -1 ? initialValues : extractInitialValues(patientDetails)
         }
         validationSchema={validationSchema}
-        onSubmit={async values => {
+        onSubmit={async (values, actions) => {
           const { status, error } = await PatientService[
             modeId !== -1 ? 'update' : 'create'
           ](values);
           if (status === REQUEST_STATUS.ERROR)
             displaySnackbar('error', `Request has failed: ${error.message}`);
-          else displaySnackbar('success', 'Patient has been added');
+          else {
+            displaySnackbar('success', 'Patient has been added');
+            actions.resetForm({ values: initialValues });
+          }
         }}>
         {({ submitForm }) => (
           <Row gutter={16} style={{ height: '100%' }}>

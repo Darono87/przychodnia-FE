@@ -41,11 +41,14 @@ const AddEmployeeForm = () => {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={async values => {
+      onSubmit={async (values, actions) => {
         const { status, error } = await AuthService.create(values);
         if (status === REQUEST_STATUS.ERROR)
           displaySnackbar('error', `Request has failed: ${error.message}`);
-        else displaySnackbar('success', 'User has been added');
+        else {
+          displaySnackbar('success', 'User has been added');
+          actions.resetForm({ values: initialValues });
+        }
       }}>
       {({ submitForm, values }) => (
         <Row gutter={16} style={{ height: '100%' }}>

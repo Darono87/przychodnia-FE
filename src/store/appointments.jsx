@@ -20,12 +20,14 @@ const AppointmentContextProvider = ({ children }) => {
   const scheduleAppointment = useCallback(async formValues => {
     const result = await AppointmentsService.create(formValues);
     if (result.data) {
-      return displaySnackbar('success', 'Appointment has been created!');
+      displaySnackbar('success', 'Appointment has been created!');
+      return true;
     }
-    return displaySnackbar(
+    displaySnackbar(
       'error',
       'Something went wrong with creating the appointment.',
     );
+    return false;
   }, []);
 
   const cancelAppointment = useCallback(async id => {
