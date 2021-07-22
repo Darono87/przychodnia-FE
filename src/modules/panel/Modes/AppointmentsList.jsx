@@ -1,5 +1,6 @@
 import { BookOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Space, Spin, Table, Tag, Tooltip } from 'antd';
+import { Spinner } from 'components';
 import React, { useContext, useEffect } from 'react';
 import { AuthContext, AppointmentContext } from 'store';
 import { MODES, ROLES } from 'strings';
@@ -127,12 +128,7 @@ const AppointmentsList = ({ setMode, setModeId }) => {
 
   return (
     <>
-      {calculateIsLoading(appointmentsStatus) && (
-        <Spin
-          style={{ margin: 'auto', marginBottom: 16, marginTop: 16 }}
-          size="large"
-        />
-      )}
+      {calculateIsLoading(appointmentsStatus) && <Spinner />}
       <Table
         columns={columns}
         rowKey={'id'}

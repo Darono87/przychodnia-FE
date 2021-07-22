@@ -1,5 +1,6 @@
 import { EditOutlined } from '@ant-design/icons';
 import { Button, Space, Spin, Table } from 'antd';
+import { Spinner } from 'components';
 import React, { useContext, useEffect } from 'react';
 import { PatientContext, AuthContext } from 'store';
 import { MODES, ROLES } from 'strings';
@@ -73,7 +74,7 @@ const PatientsList = ({ setMode, setModeId }) => {
 
   return (
     <>
-      {calculateIsLoading(patientsStatus) && <Spin size="large" />}
+      {calculateIsLoading(patientsStatus) && <Spinner />}
       <Table
         columns={columns}
         rowKey={'id'}

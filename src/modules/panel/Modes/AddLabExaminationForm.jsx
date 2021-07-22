@@ -64,7 +64,11 @@ const AddLabExaminationForm = ({ modeId, setModeId }) => {
             />
           </Col>
           <Col className="mode-form-col" span={12}>
-            <TextArea rows={6} name="result" placeholder="Your Remarks" />
+            <TextArea
+              rows={6}
+              name="doctorRemarks"
+              placeholder="Your Remarks"
+            />
             <Button
               style={{ width: 300 }}
               onClick={submitForm}
