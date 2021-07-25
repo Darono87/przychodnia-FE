@@ -15,6 +15,7 @@ const Modes = ({ mode, setMode, modeId, setModeId }) => {
     case MODES.AddEmployee:
       return <AddEmployeeForm />;
     case MODES.AddPatient:
+    case MODES.EditPatient:
       return <AddPatientForm modeId={modeId} setModeId={setModeId} />;
     case MODES.ScheduleAppointment:
       return <ScheduleAppointmentForm />;

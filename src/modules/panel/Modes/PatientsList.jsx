@@ -61,7 +61,7 @@ const PatientsList = ({ setMode, setModeId }) => {
               shape="circle"
               icon={<EditOutlined />}
               onClick={() => {
-                setMode(MODES.AddPatient);
+                setMode(MODES.EditPatient);
                 setModeId(record.id);
               }}
             />

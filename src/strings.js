@@ -57,6 +57,7 @@ export const ROLES = {
 export const MODES = {
   AddEmployee: 'Add Employee',
   AddPatient: 'Add Patient',
+  EditPatient: 'Edit Patient',
   AddLabExamination: 'Add Lab Examination',
   ScheduleAppointment: 'Schedule Appointment',
   ListAppointments: 'Appointments',
