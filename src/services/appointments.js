@@ -33,6 +33,15 @@ class AppointmentService {
       return { status: REQUEST_STATUS.ERROR };
     }
   }
+
+  static async finish(id) {
+    try {
+      await axios.patch(ENDPOINT.finishAppointment(id));
+      return { status: REQUEST_STATUS.SUCCESS };
+    } catch (error) {
+      return { status: REQUEST_STATUS.ERROR };
+    }
+  }
 }
 
 export default AppointmentService;

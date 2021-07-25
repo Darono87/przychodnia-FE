@@ -22,6 +22,7 @@ export const ENDPOINT = {
   scheduleAppointment: createURL(APPOINTMENT_CONTROLLER),
   getAppointments: createURL(APPOINTMENT_CONTROLLER),
   cancelAppointment: createURL(APPOINTMENT_CONTROLLER, 'cancel'),
+  finishAppointment: id => createURL(APPOINTMENT_CONTROLLER, `finish/${id}`),
   getAppointmentsSuggestions: createURL(APPOINTMENT_CONTROLLER, 'suggestions'),
   getExaminationCodesSuggestions: createURL(
     EXAMINATION_CODE_CONTROLLER,
