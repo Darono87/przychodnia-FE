@@ -27,6 +27,18 @@ class AuthService {
       return { status: REQUEST_STATUS.ERROR, error };
     }
   }
+
+  static async refresh(accessToken, refreshToken) {
+    try {
+      const { data } = await axios.post(ENDPOINT.refresh, {
+        accessToken,
+        refreshToken,
+      });
+      return { status: REQUEST_STATUS.SUCCESS, data };
+    } catch (error) {
+      return { status: REQUEST_STATUS.ERROR, error };
+    }
+  }
 }
 
 export default AuthService;
