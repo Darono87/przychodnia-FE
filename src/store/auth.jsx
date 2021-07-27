@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { displaySnackbar } from 'utils';
-import { PATHS } from 'strings';
+import { ENDPOINT, PATHS, REQUEST_STATUS } from 'strings';
 import { useHistory } from 'react-router';
 import { AuthService } from '../services';
 
@@ -45,6 +45,64 @@ const AuthContextProvider = ({ children }) => {
     history.push(PATHS.LOGIN);
     setState(getDefaultState());
     displaySnackbar('success', 'Successfully logged out');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const refresh = useCallback(async () => {
+    const result = await AuthService.refresh(
+      localStorage.getItem('accessToken'),
+      localStorage.getItem('refreshToken'),
+    );
+
+    if (result.status === REQUEST_STATUS.SUCCESS) {
+      const newState = { ...getDefaultState() };
+      newState.accessToken = result.data.accessToken;
+      newState.refreshToken = result.data.refreshToken;
+
+      setState(newState);
+      localStorage.setItem('accessToken', result.data.accessToken);
+      localStorage.setItem('refreshToken', result.data.refreshToken);
+
+      return true;
+    }
+
+    return false;
+  }, []);
+
+  // eslint-disable-next-line no-unused-vars
+  const interceptor = useMemo(() => {
+    axios.interceptors.response.use(
+      response => response,
+      async error => {
+        const originalRequest = error.config;
+
+        if (
+          error.response.status === 401 &&
+          originalRequest?.url?.includes(ENDPOINT.refresh)
+        ) {
+          signOut();
+          return;
+        }
+
+        if (error.response.status === 401) {
+          const result = await refresh();
+
+          if (result) {
+            originalRequest.headers.Authorization = `Bearer ${localStorage.getItem(
+              'accessToken',
+            )}`;
+            axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+              'accessToken',
+            )}`;
+            // eslint-disable-next-line consistent-return
+            return axios(originalRequest);
+          }
+        }
+
+        throw error;
+      },
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
