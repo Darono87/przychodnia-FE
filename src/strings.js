@@ -22,6 +22,7 @@ export const ENDPOINT = {
   scheduleAppointment: createURL(APPOINTMENT_CONTROLLER),
   getAppointments: createURL(APPOINTMENT_CONTROLLER),
   cancelAppointment: createURL(APPOINTMENT_CONTROLLER, 'cancel'),
+  finishAppointment: id => createURL(APPOINTMENT_CONTROLLER, `finish/${id}`),
   getAppointmentsSuggestions: createURL(APPOINTMENT_CONTROLLER, 'suggestions'),
   getExaminationCodesSuggestions: createURL(
     EXAMINATION_CODE_CONTROLLER,
@@ -57,6 +58,7 @@ export const ROLES = {
 export const MODES = {
   AddEmployee: 'Add Employee',
   AddPatient: 'Add Patient',
+  EditPatient: 'Edit Patient',
   AddLabExamination: 'Add Lab Examination',
   ScheduleAppointment: 'Schedule Appointment',
   ListAppointments: 'Appointments',

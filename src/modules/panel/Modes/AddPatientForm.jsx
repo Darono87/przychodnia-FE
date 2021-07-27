@@ -76,7 +76,11 @@ const AddPatientForm = ({ modeId, setModeId }) => {
           ](values);
           if (status === REQUEST_STATUS.ERROR)
             displaySnackbar('error', `Request has failed: ${error.message}`);
-          else displaySnackbar('success', 'Patient has been added');
+          else
+            displaySnackbar(
+              'success',
+              `Patient has been ${modeId !== -1 ? 'updated' : 'added'}`,
+            );
         }}>
         {({ submitForm }) => (
           <Row gutter={16} style={{ height: '100%' }}>

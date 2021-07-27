@@ -1,12 +1,20 @@
 import { Card, Col, Layout, Row } from 'antd';
 import { Footer, Navbar } from 'components';
-import React from 'react';
-import LoginForm from './LoginForm';
+import React, { useContext } from 'react';
 import './login.less';
+import { AuthContext } from 'store';
+import { Redirect } from 'react-router-dom';
+import LoginForm from './LoginForm';
 
 const { Content } = Layout;
 
 const Login = () => {
+  const { accessToken } = useContext(AuthContext);
+
+  if (accessToken) {
+    return <Redirect to="/panel" />;
+  }
+
   return (
     <Layout style={{ height: '100vh' }}>
       <Navbar />

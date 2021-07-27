@@ -36,6 +36,17 @@ const AppointmentContextProvider = ({ children }) => {
     return displaySnackbar('error', 'The appointment could not be cancelled.');
   }, []);
 
+  const finishAppointment = useCallback(async id => {
+    const { status } = await AppointmentsService.finish(id);
+    if (status === REQUEST_STATUS.SUCCESS) {
+      return displaySnackbar(
+        'success',
+        'Appointment has been successfully finished.',
+      );
+    }
+    return displaySnackbar('error', 'The appointment could not be finished.');
+  }, []);
+
   const getAppointments = useCallback(async props => {
     setState({
       appointments: [],
@@ -81,6 +92,7 @@ const AppointmentContextProvider = ({ children }) => {
         scheduleAppointment,
         getAppointments,
         cancelAppointment,
+        finishAppointment,
       }}>
       {children}
     </AppointmentContext.Provider>
