@@ -8,12 +8,14 @@ import ScheduleAppointmentForm from './ScheduleAppointmentForm.jsx';
 import AddPhysicalExaminationForm from './AddPhysicalExaminationForm.jsx';
 import AddLabExaminationForm from './AddLabExaminationForm.jsx';
 import PatientsList from './PatientsList.jsx';
+import LabExaminationsList from './LabExaminationsList.jsx';
 
 const Modes = ({ mode, setMode, modeId, setModeId }) => {
   switch (mode) {
     case MODES.AddEmployee:
       return <AddEmployeeForm />;
     case MODES.AddPatient:
+    case MODES.EditPatient:
       return <AddPatientForm modeId={modeId} setModeId={setModeId} />;
     case MODES.ScheduleAppointment:
       return <ScheduleAppointmentForm />;
@@ -27,6 +29,8 @@ const Modes = ({ mode, setMode, modeId, setModeId }) => {
       return <PatientsList setModeId={setModeId} setMode={setMode} />;
     case MODES.AddLabExamination:
       return <AddLabExaminationForm modeId={modeId} setModeId={setModeId} />;
+    case MODES.GetLabExaminations:
+      return <LabExaminationsList />;
     default:
       return (
         <Empty

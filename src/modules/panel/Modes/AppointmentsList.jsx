@@ -1,5 +1,6 @@
-import { BookOutlined, CloseOutlined } from '@ant-design/icons';
+import { BookOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Space, Spin, Table, Tag, Tooltip } from 'antd';
+import { Spinner } from 'components';
 import React, { useContext, useEffect } from 'react';
 import { AuthContext, AppointmentContext } from 'store';
 import { MODES, ROLES } from 'strings';
@@ -19,6 +20,7 @@ const AppointmentsList = ({ setMode, setModeId }) => {
     appointmentsStatus,
     appointmentsCount,
     cancelAppointment,
+    finishAppointment,
   } = useContext(AppointmentContext);
 
   const { role } = useContext(AuthContext);
@@ -93,29 +95,60 @@ const AppointmentsList = ({ setMode, setModeId }) => {
       fixed: 'right',
       render: (_, record) => (
         <Space>
-          <Button
-            shape="circle"
-            icon={<CloseOutlined />}
-            onClick={async () => {
-              try {
-                await cancelAppointment(record.id);
-                await refresh();
-              } catch (e) {
-                displaySnackbar(
-                  'error',
-                  'Sorry, Could not fetch the appointments.',
-                );
-              }
-            }}
-          />
+          <Tooltip title="Cancel appointment">
+            <Button
+              disabled={record.status.name === 'Cancelled'}
+              shape="circle"
+              icon={<CloseOutlined />}
+              onClick={async () => {
+                try {
+                  await cancelAppointment(record.id);
+                  await refresh();
+                } catch (e) {
+                  displaySnackbar(
+                    'error',
+                    'Sorry, Could not fetch the appointments.',
+                  );
+                }
+              }}
+            />
+          </Tooltip>
           {role === ROLES.Doctor && (
             <Tooltip title="Add Physical Examination">
               <Button
+                disabled={
+                  record.status.name === 'Cancelled' ||
+                  record.status.name === 'Finished'
+                }
                 shape="round"
                 icon={<BookOutlined />}
                 onClick={() => {
                   setMode(MODES.AddPhysicalExamination);
                   setModeId(record.id);
+                }}
+              />
+            </Tooltip>
+          )}
+          {role === ROLES.Doctor && (
+            <Tooltip title="Finish appointment">
+              <Button
+                disabled={
+                  !record.isFinishable ||
+                  record.status.name === 'Cancelled' ||
+                  record.status.name === 'Finished'
+                }
+                shape="round"
+                icon={<CheckOutlined />}
+                onClick={async () => {
+                  try {
+                    await finishAppointment(record.id);
+                    await refresh();
+                  } catch (e) {
+                    displaySnackbar(
+                      'error',
+                      'Sorry, Could not fetch the appointments.',
+                    );
+                  }
                 }}
               />
             </Tooltip>
@@ -127,12 +160,7 @@ const AppointmentsList = ({ setMode, setModeId }) => {
 
   return (
     <>
-      {calculateIsLoading(appointmentsStatus) && (
-        <Spin
-          style={{ margin: 'auto', marginBottom: 16, marginTop: 16 }}
-          size="large"
-        />
-      )}
+      {calculateIsLoading(appointmentsStatus) && <Spinner />}
       <Table
         columns={columns}
         rowKey={'id'}

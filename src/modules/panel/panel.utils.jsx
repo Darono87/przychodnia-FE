@@ -6,6 +6,7 @@ import {
   BookOutlined,
   HeartOutlined,
   DatabaseOutlined,
+  LineChartOutlined,
 } from '@ant-design/icons';
 import React from 'react';
 import { ROLES, MODES } from 'strings';
@@ -45,5 +46,10 @@ export const modes = [
     name: MODES.AddLabExamination,
     roles: [ROLES.Doctor],
     icon: <DatabaseOutlined />,
+  },
+  {
+    name: MODES.GetLabExaminations,
+    roles: [ROLES.LabTechnician, ROLES.LabManager],
+    icon: <LineChartOutlined />,
   },
 ];

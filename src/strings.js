@@ -22,6 +22,7 @@ export const ENDPOINT = {
   scheduleAppointment: createURL(APPOINTMENT_CONTROLLER),
   getAppointments: createURL(APPOINTMENT_CONTROLLER),
   cancelAppointment: createURL(APPOINTMENT_CONTROLLER, 'cancel'),
+  finishAppointment: id => createURL(APPOINTMENT_CONTROLLER, `finish/${id}`),
   getAppointmentsSuggestions: createURL(APPOINTMENT_CONTROLLER, 'suggestions'),
   getExaminationCodesSuggestions: createURL(
     EXAMINATION_CODE_CONTROLLER,
@@ -30,6 +31,7 @@ export const ENDPOINT = {
   addPhysicalExamination: createURL(PHYSICAL_EXAMINATION_CONTROLLER),
   getPatients: createURL(PATIENT_CONTROLLER),
   addLabExamination: createURL(LAB_EXAMINATION_CONTROLLER),
+  getLabExaminations: createURL(LAB_EXAMINATION_CONTROLLER),
 };
 
 export const REQUEST_STATUS = {
@@ -56,11 +58,13 @@ export const ROLES = {
 export const MODES = {
   AddEmployee: 'Add Employee',
   AddPatient: 'Add Patient',
+  EditPatient: 'Edit Patient',
   AddLabExamination: 'Add Lab Examination',
   ScheduleAppointment: 'Schedule Appointment',
   ListAppointments: 'Appointments',
   AddPhysicalExamination: 'Add Physical Examination',
   ListPatients: 'Patients',
+  GetLabExaminations: 'Lab Examinations',
 };
 
 export const APPOINTMENT_STATUS = [
@@ -73,3 +77,19 @@ export const EXAMINATION_TYPES = {
   Physical: 'Physical',
   Laboratory: 'Laboratory',
 };
+
+export const LAB_EXAMINATION_TYPE = {
+  Scheduled: 'Scheduled',
+  Finished: 'Finished',
+  Cancelled: 'Cancelled',
+  CancelledByManager: 'CancelledByManager',
+  Accepted: 'Accepted',
+};
+
+export const LAB_EXAMINATION_STATUS = [
+  { name: 'Scheduled', color: '#5bc9d9' },
+  { name: 'Finished', color: '#c2ed4a' },
+  { name: 'Cancelled', color: '#e0e055' },
+  { name: 'CancelledByManager', color: '#e0e055' },
+  { name: 'Accepted', color: '#67c44d' },
+];
