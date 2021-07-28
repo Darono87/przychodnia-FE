@@ -1,8 +1,13 @@
 import { BookOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Space, Spin, Table, Tag, Tooltip } from 'antd';
+import { Button, Space, Spin, Table, Tag, Tooltip, Modal } from 'antd';
 import { Spinner } from 'components';
-import React, { useContext, useEffect } from 'react';
-import { AuthContext, AppointmentContext } from 'store';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  AuthContext,
+  AppointmentContext,
+  LabExaminationContext,
+  PhysicalExaminationContext,
+} from 'store';
 import { MODES, ROLES } from 'strings';
 import {
   calculateIsLoading,
@@ -10,6 +15,7 @@ import {
   usePagination,
   useSorting,
 } from 'utils';
+import PhyExaminationTable from './ModalTables/PhyExaminationTable.jsx';
 
 // Date, Doctor Name, Patient Name, Shortcut of Description
 
@@ -23,15 +29,33 @@ const AppointmentsList = ({ setMode, setModeId }) => {
     finishAppointment,
   } = useContext(AppointmentContext);
 
+  const { getLabExaminations } = useContext(LabExaminationContext);
+  const { getPhysicalExaminations } = useContext(PhysicalExaminationContext);
+
   const { role } = useContext(AuthContext);
   const { sortKey, isAscending, sortFunction } = useSorting('doctor', true);
   const { pagination, refresh, perPage, page } = usePagination(
     props => getAppointments({ ...props, sortKey, isAscending }),
     appointmentsCount,
   );
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [isAnySelected, setAnySelected] = useState(false);
+
+  const [isPhysicalModalVisible, setPhysicalModalVisibility] = useState(false);
+  const [isLabModalVisible, setLabModalVisibility] = useState(false);
+
   useEffect(() => {
     getAppointments({ sortKey, isAscending, perPage, page });
   }, [sortKey, isAscending, page, perPage]);
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: selectedKeys => {
+      if (selectedKeys.length > 0) setAnySelected(true);
+      else setAnySelected(false);
+      setSelectedRowKeys(selectedKeys);
+    },
+  };
 
   const columns = [
     {
@@ -161,13 +185,51 @@ const AppointmentsList = ({ setMode, setModeId }) => {
   return (
     <>
       {calculateIsLoading(appointmentsStatus) && <Spinner />}
+      {role === ROLES.Doctor && (
+        <Space style={{ marginBottom: 16 }}>
+          <Button
+            type="primary"
+            disabled={!isAnySelected}
+            onClick={() => {
+              setPhysicalModalVisibility(true);
+            }}>
+            List Physical Examinations
+          </Button>
+          <Button
+            type="primary"
+            disabled={!isAnySelected}
+            onClick={() => setLabModalVisibility(true)}>
+            List Laboratory Examinations
+          </Button>
+          <span>
+            {isAnySelected ? `Selected: ${selectedRowKeys.length}` : ''}
+          </span>
+        </Space>
+      )}
       <Table
         columns={columns}
         rowKey={'id'}
         onChange={sortFunction}
         dataSource={appointments}
         pagination={pagination}
+        rowSelection={role === ROLES.Doctor ? rowSelection : ''}
       />
+      <Modal
+        title="Physical Examinations"
+        okText="Confirm"
+        visible={isPhysicalModalVisible}
+        cancelButtonProps={{ style: { visibility: 'hidden' } }}
+        onOk={() => setPhysicalModalVisibility(false)}
+        onCancel={() => setPhysicalModalVisibility(false)}>
+        <PhyExaminationTable selectedAppointments={selectedRowKeys} />
+      </Modal>
+      <Modal
+        title="Lab Examinations"
+        okText="Confirm"
+        visible={isLabModalVisible}
+        cancelButtonProps={{ style: { visibility: 'hidden' } }}
+        onOk={() => setLabModalVisibility(false)}
+        onCancel={() => setPhysicalModalVisibility(false)}></Modal>
     </>
   );
 };

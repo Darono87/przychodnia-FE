@@ -13,7 +13,7 @@ export const calculateIsLoading = flag =>
   flag === REQUEST_STATUS.IDLE || flag === REQUEST_STATUS.LOADING;
 
 export const formatDatetime = datetime =>
-  moment(datetime).format('DD.MM.YYYY HH:MM');
+  moment(datetime).format('Do MMM YYYY HH:mm');
 
 export const putEmptyValues = datesheet =>
   Object.entries(datesheet).reduce(

@@ -32,6 +32,7 @@ export const ENDPOINT = {
   getPatients: createURL(PATIENT_CONTROLLER),
   addLabExamination: createURL(LAB_EXAMINATION_CONTROLLER),
   getLabExaminations: createURL(LAB_EXAMINATION_CONTROLLER),
+  getPhysicalExaminations: createURL(PHYSICAL_EXAMINATION_CONTROLLER),
 };
 
 export const REQUEST_STATUS = {

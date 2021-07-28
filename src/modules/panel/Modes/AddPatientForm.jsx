@@ -2,7 +2,7 @@ import { Button, Col, Row, Spin, Typography } from 'antd';
 import { TextField } from 'components';
 import { Formik } from 'formik';
 import React, { useContext, useEffect } from 'react';
-import PatientService from 'services/patients';
+import { PatientsService } from 'services';
 import { PatientContext } from 'store';
 import { REQUEST_STATUS } from 'strings';
 import { displaySnackbar } from 'utils';
@@ -71,20 +71,19 @@ const AddPatientForm = ({ modeId, setModeId }) => {
         }
         validationSchema={validationSchema}
         onSubmit={async (values, actions) => {
-          const { status, error } = await PatientService[
+          const { status, error } = await PatientsService[
             modeId !== -1 ? 'update' : 'create'
           ](values);
           if (status === REQUEST_STATUS.ERROR)
             displaySnackbar('error', `Request has failed: ${error.message}`);
-          else
-          {
+          else {
             displaySnackbar(
               'success',
               `Patient has been ${modeId !== -1 ? 'updated' : 'added'}`,
             );
             actions.resetForm({ values: initialValues });
           }
-        }}
+        }}>
         {({ submitForm }) => (
           <Row gutter={16} style={{ height: '100%' }}>
             <Col

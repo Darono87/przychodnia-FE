@@ -19,7 +19,7 @@ const DatetimePicker = ({
     {({ field, meta, form }) => (
       <div className="textfield_parent">
         <DatePicker
-          showTime
+          showTime={{ format: 'HH:mm', minuteStep: 5 }}
           showNow={!onlyFuture}
           disabledDate={onlyFuture && disabledDate}
           {...field}
