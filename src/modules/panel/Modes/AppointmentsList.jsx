@@ -97,7 +97,10 @@ const AppointmentsList = ({ setMode, setModeId }) => {
         <Space>
           <Tooltip title="Cancel appointment">
             <Button
-              disabled={record.status.name === 'Cancelled'}
+              disabled={
+                record.status.name === 'Cancelled' ||
+                record.status.name === 'Finished'
+              }
               shape="circle"
               icon={<CloseOutlined />}
               onClick={async () => {
