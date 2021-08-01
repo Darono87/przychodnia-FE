@@ -8,6 +8,7 @@ import businessPhoto1 from 'assets/przychodnia1.jpg';
 import businessPhoto2 from 'assets/przychodnia2.jpg';
 // @ts-ignore
 import businessPhoto3 from 'assets/przychodnia3.jpg';
+import EmailForm from './EmailForm';
 
 const { Content } = Layout;
 
@@ -56,6 +57,8 @@ const Home = () => {
           vestibulum. Maecenas molestie consequat mi, quis pulvinar lorem
           consectetur in."
         </Typography.Paragraph>
+        <Typography.Title level={5}>Skontaktuj się z nami</Typography.Title>
+        <EmailForm />
       </Content>
       <Footer />
     </Layout>

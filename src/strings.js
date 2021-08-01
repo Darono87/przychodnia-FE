@@ -6,6 +6,7 @@ const APPOINTMENT_CONTROLLER = 'appointments';
 const EXAMINATION_CODE_CONTROLLER = 'examinationCodes';
 const PHYSICAL_EXAMINATION_CONTROLLER = 'physicalExaminations';
 const LAB_EXAMINATION_CONTROLLER = 'labExaminations';
+const EMAIL_CONTROLLER = 'mails';
 
 const createURL = (controller, endpoint) =>
   `${API_BASE_URL}/${controller}${endpoint ? `/${endpoint}` : ''}`;
@@ -20,6 +21,7 @@ export const ENDPOINT = {
   getUsersByRoleSuggestions: createURL(USER_CONTROLLER, 'suggestions'),
   getPatientsSuggestions: createURL(PATIENT_CONTROLLER, 'suggestions'),
   scheduleAppointment: createURL(APPOINTMENT_CONTROLLER),
+  sendEmail: createURL(EMAIL_CONTROLLER),
   getAppointments: createURL(APPOINTMENT_CONTROLLER),
   cancelAppointment: createURL(APPOINTMENT_CONTROLLER, 'cancel'),
   finishAppointment: id => createURL(APPOINTMENT_CONTROLLER, `finish/${id}`),
