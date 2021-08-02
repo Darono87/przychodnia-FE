@@ -51,7 +51,6 @@ export const useSorting = (initSortKey, initAscending) => {
     sortKey,
     isAscending,
     sortFunction: (_, __, { columnKey, order }) => {
-      console.log(order);
       setAscending(order === 'ascend');
       setSortKey(columnKey);
     },

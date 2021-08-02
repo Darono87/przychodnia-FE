@@ -37,7 +37,7 @@ const PhysicalExaminationContextProvider = ({ children }) => {
       physicalExaminationsStatus: REQUEST_STATUS.LOADING,
       physicalExaminationsCount: 0,
     }));
-    console.log(props);
+
     const { data } = await PhysicalExaminationsService.get(props);
     if (data) {
       setState(pastState => ({
@@ -58,8 +58,8 @@ const PhysicalExaminationContextProvider = ({ children }) => {
               : '',
           };
         }),
-        labExaminationsCount: data.count,
-        labExaminationsStatus: REQUEST_STATUS.SUCCESS,
+        physicalExaminationsCount: data.count,
+        physicalExaminationsStatus: REQUEST_STATUS.SUCCESS,
       }));
       return;
     }

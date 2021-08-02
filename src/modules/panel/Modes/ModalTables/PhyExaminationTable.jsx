@@ -17,8 +17,6 @@ const PhyExaminationTable = ({ selectedAppointments }) => {
   );
 
   const appointments = selectedAppointments;
-  // .reduce((rest, actual) => `${rest},${actual}`, '')
-  // .slice(1);
 
   const { pagination, refresh, perPage, page } = usePagination(
     props =>
@@ -40,7 +38,7 @@ const PhyExaminationTable = ({ selectedAppointments }) => {
         perPage,
         page,
       }),
-    [sortKey, isAscending, perPage, page],
+    [appointments, sortKey, isAscending, perPage, page],
   );
 
   const columns = [
