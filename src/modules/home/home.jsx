@@ -9,6 +9,8 @@ import businessPhoto2 from 'assets/przychodnia2.jpg';
 // @ts-ignore
 import businessPhoto3 from 'assets/przychodnia3.jpg';
 import EmailForm from './EmailForm';
+import { Map } from './Map';
+import { OpenHours } from './OpenHours';
 
 const { Content } = Layout;
 
@@ -46,17 +48,17 @@ const Home = () => {
             src={businessPhoto3}
           />
         </Carousel>
-        <Typography.Title level={5}>
-          Rejestracja przez Internet
-        </Typography.Title>
         <Typography.Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dapibus
-          dui eu ex iaculis luctus. Etiam viverra leo ac enim consequat
-          hendrerit. Morbi posuere ligula sit amet sapien laoreet gravida. In
-          sit amet eleifend nisl. Aliquam efficitur massa quis neque molestie
-          vestibulum. Maecenas molestie consequat mi, quis pulvinar lorem
-          consectetur in."
+          Przychodnia pod AEI to przychodnia z tradycjami. Istnieje od 1964 roku
+          i trzyma się zasady „Jesteśmy Przychodnią przyjazną dla wszystkich”.
+          Zapraszamy pacjentów do korzystania z naszej ofert medycznej. <br />
+          Nasza przychodnia oferuje kompleksowe usługi medyczne. Posiadamy
+          szereg poradni, świadczących bardzo szeroki wachlarz usług. Wysoko
+          wykwalifikowani lekarze i specjaliści zapewniają najwyższy poziom
+          świadczonych usług.
         </Typography.Paragraph>
+        <OpenHours />
+        <Map />
         <Typography.Title level={5}>Skontaktuj się z nami</Typography.Title>
         <EmailForm />
       </Content>

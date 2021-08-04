@@ -95,11 +95,8 @@ const SuggestionsContextProvider = ({ children }) => {
       examinationCodesStatus: REQUEST_STATUS.LOADING,
       examinationCodes: [],
     }));
-    const {
-      data: examinationCodes,
-    } = await SuggestionsService.getExaminationCodes(
-      EXAMINATION_TYPES.Physical,
-    );
+    const { data: examinationCodes } =
+      await SuggestionsService.getExaminationCodes(EXAMINATION_TYPES.Physical);
     if (examinationCodes?.suggestions)
       setState(pastState => ({
         ...pastState,
