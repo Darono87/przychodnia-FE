@@ -22,7 +22,7 @@ const validationSchema = object().shape({
 const AddLabExaminationForm = ({ modeId, setModeId }) => {
   const {
     updateAppointmentsSuggestions,
-    updateExaminationCodesSuggestions,
+    updateExaminationCodesLabSuggestions,
     appointments,
     appointmentsStatus,
     examinationCodes,
@@ -32,7 +32,7 @@ const AddLabExaminationForm = ({ modeId, setModeId }) => {
 
   useEffect(() => {
     updateAppointmentsSuggestions();
-    updateExaminationCodesSuggestions();
+    updateExaminationCodesLabSuggestions();
 
     return () => {
       setModeId(-1);
