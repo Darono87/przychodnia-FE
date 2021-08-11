@@ -1,5 +1,4 @@
 import { Col, Row, Button } from 'antd';
-import initialise from 'bfj/src/walk';
 import { Autocomplete, TextArea } from 'components';
 import { Formik } from 'formik';
 import React, { useContext, useEffect, useState } from 'react';
