@@ -81,7 +81,7 @@ const SuggestionsContextProvider = ({ children }) => {
           const splitted = suggestion.label.split(',');
           return {
             ...suggestion,
-            label: `${formatDatetime(splitted[0])}, ${splitted[1]}`,
+            label: `${splitted[0]}, ${splitted[1]}`,
           };
         }),
         appointmentsStatus: REQUEST_STATUS.SUCCESS,

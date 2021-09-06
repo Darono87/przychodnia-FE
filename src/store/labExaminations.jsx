@@ -60,12 +60,14 @@ const LabExaminationContextProvider = ({ children }) => {
   const createLabExamination = useCallback(async formValues => {
     const result = await LabExaminationsService.create(formValues);
     if (result.data) {
-      return displaySnackbar('success', 'Lab Examination has been created!');
+      displaySnackbar('success', 'Lab Examination has been created!');
+      return true;
     }
-    return displaySnackbar(
+    displaySnackbar(
       'error',
       'Something went wrong with creating the lab examination.',
     );
+    return false;
   }, []);
 
   return (

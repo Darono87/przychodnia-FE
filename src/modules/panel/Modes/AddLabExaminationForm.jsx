@@ -1,10 +1,12 @@
 import { Col, Row, Button } from 'antd';
 import { Autocomplete, TextArea } from 'components';
 import { Formik } from 'formik';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { LabExaminationContext, SuggestionsContext } from 'store';
 import { calculateIsLoading } from 'utils';
 import { object, number, string } from 'yup';
+import { PATHS } from 'strings';
 import './Forms.less';
 
 const getInitialValues = appointmentId => ({
@@ -33,7 +35,6 @@ const AddLabExaminationForm = ({ modeId, setModeId }) => {
   useEffect(() => {
     updateAppointmentsSuggestions();
     updateExaminationCodesLabSuggestions();
-
     return () => {
       setModeId(-1);
     };
@@ -43,7 +44,13 @@ const AddLabExaminationForm = ({ modeId, setModeId }) => {
     <Formik
       initialValues={getInitialValues(modeId === -1 ? undefined : modeId)}
       validationSchema={validationSchema}
-      onSubmit={createLabExamination}>
+      onSubmit={async (values, actions) => {
+        if (await createLabExamination(values)) {
+          actions.resetForm({
+            values: getInitialValues(modeId === -1 ? undefined : modeId),
+          });
+        }
+      }}>
       {({ submitForm }) => (
         <Row gutter={16} style={{ height: '100%' }}>
           <Col
@@ -64,11 +71,7 @@ const AddLabExaminationForm = ({ modeId, setModeId }) => {
             />
           </Col>
           <Col className="mode-form-col" span={12}>
-            <TextArea
-              rows={6}
-              name="doctorRemarks"
-              placeholder="Your Remarks"
-            />
+            <TextArea rows={6} name="result" placeholder="Your Remarks" />
             <Button
               style={{ width: 300 }}
               onClick={submitForm}

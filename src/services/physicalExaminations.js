@@ -13,6 +13,17 @@ class PhysicalExaminationService {
       return { status: REQUEST_STATUS.ERROR, error };
     }
   }
+
+  static async get(params) {
+    try {
+      const { data } = await axios.get(ENDPOINT.getPhysicalExaminations, {
+        params,
+      });
+      return { status: REQUEST_STATUS.SUCCESS, data };
+    } catch (error) {
+      return { status: REQUEST_STATUS.ERROR, error };
+    }
+  }
 }
 
 export default PhysicalExaminationService;
