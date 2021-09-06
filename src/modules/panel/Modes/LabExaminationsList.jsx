@@ -4,8 +4,14 @@ import TextArea from 'antd/lib/input/TextArea';
 import { Spinner } from 'components';
 import React, { useContext, useEffect, useState } from 'react';
 import { LabExaminationContext, AuthContext } from 'store';
-import { LAB_EXAMINATION_TYPE, ROLES } from 'strings';
-import { calculateIsLoading, usePagination, useSorting } from 'utils';
+import { LAB_EXAMINATION_TYPE, REQUEST_STATUS, ROLES } from 'strings';
+import {
+  calculateIsLoading,
+  displaySnackbar,
+  usePagination,
+  useSorting,
+} from 'utils';
+import { LabExaminationsService } from 'services';
 
 const LabExaminationsList = ({ setMode, setModeId }) => {
   const {
@@ -19,6 +25,7 @@ const LabExaminationsList = ({ setMode, setModeId }) => {
   const [isApproveVisible, setApproveVisible] = useState(false);
   const [result, setResult] = useState('');
   const [managerRemarks, setManagerRemarks] = useState('');
+  const [examinationId, setExaminationId] = useState(0);
 
   const { sortKey, isAscending, sortFunction } = useSorting('issueDate', true);
   const { pagination, perPage, page } = usePagination(
@@ -108,6 +115,7 @@ const LabExaminationsList = ({ setMode, setModeId }) => {
                 icon={<AuditOutlined />}
                 onClick={() => {
                   setFillVisible(true);
+                  setExaminationId(record.id);
                 }}
               />
             </Tooltip>
@@ -119,6 +127,7 @@ const LabExaminationsList = ({ setMode, setModeId }) => {
                 icon={<CheckOutlined />}
                 onClick={() => {
                   setApproveVisible(true);
+                  setExaminationId(record.id);
                 }}
               />
             </Tooltip>
@@ -128,12 +137,28 @@ const LabExaminationsList = ({ setMode, setModeId }) => {
     },
   ];
 
+  const onConfirm = async () => {
+    const params = { id: examinationId, result };
+    const { status, error } = await LabExaminationsService.confirm(params);
+    if (status === REQUEST_STATUS.SUCCESS)
+      displaySnackbar('success', 'Result added successfully');
+    else displaySnackbar('error', `${error.message}`);
+  };
+
+  const onFinalize = async () => {
+    const params = { id: examinationId, managerRemarks };
+    const { status, error } = await LabExaminationsService.finalize(params);
+    if (status === REQUEST_STATUS.SUCCESS)
+      displaySnackbar('success', 'Examination finalized successfully');
+    else displaySnackbar('error', `${error.message}`);
+  };
+
   return (
     <>
       <Modal
         title="Fill the lab examination"
         visible={isFillVisible}
-        onOk={() => {}}
+        onOk={onConfirm}
         okText="Complete the examination"
         onCancel={() => {
           setFillVisible(false);
@@ -151,7 +176,7 @@ const LabExaminationsList = ({ setMode, setModeId }) => {
         title="Approve the examination"
         visible={isApproveVisible}
         okText="Approve the examination"
-        onOk={() => {}}
+        onOk={onFinalize}
         onCancel={() => {
           setApproveVisible(false);
           setManagerRemarks('');
