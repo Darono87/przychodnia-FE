@@ -1,4 +1,7 @@
-export const API_BASE_URL = 'https://localhost:5001/api';
+// eslint-disable-next-line no-undef
+export const API_BASE_URL =
+  // eslint-disable-next-line no-undef
+  process.env.REACT_APP_PRZYCHODNIA_BACKEND || 'https://localhost:5001/api';
 
 const USER_CONTROLLER = 'users';
 const PATIENT_CONTROLLER = 'patients';
