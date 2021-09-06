@@ -21,6 +21,24 @@ class LabExaminationService {
       return { status: REQUEST_STATUS.ERROR, error };
     }
   }
+
+  static async confirm(params) {
+    try {
+      const { data } = await axios.put(ENDPOINT.confirmLabExamination, params);
+      return { status: REQUEST_STATUS.SUCCESS, data };
+    } catch (error) {
+      return { status: REQUEST_STATUS.ERROR, error };
+    }
+  }
+
+  static async finalize(params) {
+    try {
+      const { data } = await axios.put(ENDPOINT.finalizeLabExamination, params);
+      return { status: REQUEST_STATUS.SUCCESS, data };
+    } catch (error) {
+      return { status: REQUEST_STATUS.ERROR, error };
+    }
+  }
 }
 
 export default LabExaminationService;

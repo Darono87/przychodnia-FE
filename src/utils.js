@@ -52,7 +52,7 @@ export const useSorting = (initSortKey, initAscending) => {
     isAscending,
     sortFunction: (_, __, { columnKey, order }) => {
       console.log(sortKey, isAscending, columnKey, order);
-      setAscending(order === 'ascend' ? true : isAscending);
+      setAscending(order === 'ascend');
       setSortKey(columnKey ?? sortKey);
     },
   };

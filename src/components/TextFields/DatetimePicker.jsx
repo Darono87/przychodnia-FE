@@ -29,6 +29,7 @@ const DatetimePicker = ({
           size="large"
           placeholder={placeholder}
           className={meta.touched && meta.error ? 'field_error_soft' : ''}
+          format="YYYY-MM-DD HH:mm"
         />
         {meta.touched && meta.error && (
           <div className="error_msg">{meta.error}</div>

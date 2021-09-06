@@ -38,6 +38,8 @@ export const ENDPOINT = {
   addLabExamination: createURL(LAB_EXAMINATION_CONTROLLER),
   getLabExaminations: createURL(LAB_EXAMINATION_CONTROLLER),
   getPhysicalExaminations: createURL(PHYSICAL_EXAMINATION_CONTROLLER),
+  confirmLabExamination: createURL(LAB_EXAMINATION_CONTROLLER, 'confirm'),
+  finalizeLabExamination: createURL(LAB_EXAMINATION_CONTROLLER, 'finalize'),
 };
 
 export const REQUEST_STATUS = {
