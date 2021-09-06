@@ -2,6 +2,7 @@ import {
   BookOutlined,
   CheckOutlined,
   CloseOutlined,
+  FormOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
 import {
@@ -171,6 +172,22 @@ const AppointmentsList = ({ setMode, setModeId }) => {
                 icon={<BookOutlined />}
                 onClick={() => {
                   setMode(MODES.AddPhysicalExamination);
+                  setModeId(record.id);
+                }}
+              />
+            </Tooltip>
+          )}
+          {role === ROLES.Doctor && (
+            <Tooltip title="Add Lab Examination">
+              <Button
+                disabled={
+                  record.status.name === 'Cancelled' ||
+                  record.status.name === 'Finished'
+                }
+                shape="round"
+                icon={<FormOutlined />}
+                onClick={() => {
+                  setMode(MODES.AddLabExamination);
                   setModeId(record.id);
                 }}
               />
