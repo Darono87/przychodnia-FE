@@ -31,8 +31,8 @@ const EmailForm = () => {
             size="large"
             direction="vertical"
             style={{ width: '60%', marginLeft: '20%' }}>
-            <TextField name="mail" placeholder="Your email" />
-            <TextArea name="message" placeholder="Message" />
+            <TextField name="mail" placeholder="Twój email" />
+            <TextArea name="message" placeholder="Wiadomość" />
             <Button onClick={submitForm} size="large" type="primary">
               Send Email
             </Button>

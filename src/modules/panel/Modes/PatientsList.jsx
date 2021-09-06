@@ -7,9 +7,8 @@ import { MODES, ROLES } from 'strings';
 import { calculateIsLoading, usePagination, useSorting } from 'utils';
 
 const PatientsList = ({ setMode, setModeId }) => {
-  const { getPatients, patients, patientsStatus, patientsCount } = useContext(
-    PatientContext,
-  );
+  const { getPatients, patients, patientsStatus, patientsCount } =
+    useContext(PatientContext);
   const { role } = useContext(AuthContext);
 
   const { sortKey, isAscending, sortFunction } = useSorting(

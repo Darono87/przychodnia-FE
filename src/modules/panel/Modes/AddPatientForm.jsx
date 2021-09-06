@@ -46,9 +46,8 @@ const validationSchema = object().shape({
 });
 
 const AddPatientForm = ({ modeId, setModeId }) => {
-  const { getPatientDetails, patientDetails, patientsStatus } = useContext(
-    PatientContext,
-  );
+  const { getPatientDetails, patientDetails, patientsStatus } =
+    useContext(PatientContext);
 
   useEffect(() => {
     if (modeId !== -1) getPatientDetails({ id: modeId });

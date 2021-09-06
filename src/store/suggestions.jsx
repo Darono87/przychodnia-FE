@@ -95,11 +95,27 @@ const SuggestionsContextProvider = ({ children }) => {
       examinationCodesStatus: REQUEST_STATUS.LOADING,
       examinationCodes: [],
     }));
-    const {
-      data: examinationCodes,
-    } = await SuggestionsService.getExaminationCodes(
-      EXAMINATION_TYPES.Physical,
-    );
+    const { data: examinationCodes } =
+      await SuggestionsService.getExaminationCodes(EXAMINATION_TYPES.Physical);
+    if (examinationCodes?.suggestions)
+      setState(pastState => ({
+        ...pastState,
+        examinationCodes: examinationCodes.suggestions,
+        examinationCodesStatus: REQUEST_STATUS.SUCCESS,
+      }));
+    else displaySnackbar('error', "Couldn't get examination codes"); //eslint-disable-line
+  };
+
+  const updateExaminationCodesLabSuggestions = async () => {
+    setState(pastState => ({
+      ...pastState,
+      examinationCodesStatus: REQUEST_STATUS.LOADING,
+      examinationCodes: [],
+    }));
+    const { data: examinationCodes } =
+      await SuggestionsService.getExaminationCodes(
+        EXAMINATION_TYPES.Laboratory,
+      );
     if (examinationCodes?.suggestions)
       setState(pastState => ({
         ...pastState,
@@ -117,6 +133,7 @@ const SuggestionsContextProvider = ({ children }) => {
         updatePatientsSuggestions,
         updateAppointmentsSuggestions,
         updateExaminationCodesSuggestions,
+        updateExaminationCodesLabSuggestions,
       }}>
       {children}
     </SuggestionsContext.Provider>
