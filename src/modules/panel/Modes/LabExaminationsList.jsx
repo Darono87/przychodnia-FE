@@ -1,5 +1,7 @@
 import { AuditOutlined, CheckOutlined } from '@ant-design/icons';
 import { Button, Modal, Space, Spin, Table, Tag, Tooltip } from 'antd';
+
+import { LabExaminationsService } from 'services';
 import TextArea from 'antd/lib/input/TextArea';
 import { Spinner } from 'components';
 import React, { useContext, useEffect, useState } from 'react';
@@ -11,7 +13,6 @@ import {
   usePagination,
   useSorting,
 } from 'utils';
-import { LabExaminationsService } from 'services';
 
 const LabExaminationsList = ({ setMode, setModeId }) => {
   const {
@@ -158,7 +159,7 @@ const LabExaminationsList = ({ setMode, setModeId }) => {
       <Modal
         title="Fill the lab examination"
         visible={isFillVisible}
-        onOk={onConfirm}
+        onOk={() => onConfirm()}
         okText="Complete the examination"
         onCancel={() => {
           setFillVisible(false);

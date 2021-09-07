@@ -24,8 +24,8 @@ class LabExaminationService {
 
   static async confirm(params) {
     try {
-      const { data } = await axios.put(ENDPOINT.confirmLabExamination, params);
-      return { status: REQUEST_STATUS.SUCCESS, data };
+      await axios.put(ENDPOINT.confirmLabExamination, params);
+      return { status: REQUEST_STATUS.SUCCESS };
     } catch (error) {
       return { status: REQUEST_STATUS.ERROR, error };
     }
@@ -33,8 +33,8 @@ class LabExaminationService {
 
   static async finalize(params) {
     try {
-      const { data } = await axios.put(ENDPOINT.finalizeLabExamination, params);
-      return { status: REQUEST_STATUS.SUCCESS, data };
+      await axios.put(ENDPOINT.finalizeLabExamination, params);
+      return { status: REQUEST_STATUS.SUCCESS };
     } catch (error) {
       return { status: REQUEST_STATUS.ERROR, error };
     }
